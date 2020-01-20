@@ -10,7 +10,7 @@ interface List{
 }
 
 
-public class SequenceList implements List{
+public class SequenceListe implements List{
     maillon tete;
 
     public void insereTete(int element){

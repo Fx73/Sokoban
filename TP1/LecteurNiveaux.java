@@ -66,7 +66,7 @@ public int[][] lisProchainNiveau(InputStream stream) throws IOException {
         return a>b?a:b;
     }
 
-    void printNiveau(Niveau N){
+    public void printNiveau(Niveau N){
         System.out.println(N.nom);
 
         int [][] tab = N.mapGet();

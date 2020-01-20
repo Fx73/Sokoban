@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 public class RedacteurNiveau{
 
- void ecrisNiveau(OutputStream stream, Niveau N) throws IOException{
+    public void ecrisNiveau(OutputStream stream, Niveau N) throws IOException{
 
     int [][] tab = N.mapGet();
     for(int i=0;i<N.lignes();i++){

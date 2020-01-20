@@ -4,8 +4,8 @@ import TP2.*;
 
 public class MainClass{
 
-    public static void main(String [] args){
-        SequenceList l = new SequenceList(); 
+    public static void main1(String [] args){
+        SequenceListe l = new SequenceListe(); 
 
 
     }
@@ -14,7 +14,7 @@ public class MainClass{
 
 
 
-    public static void main1(String [] args) throws FileNotFoundException,IOException {
+    public static void main(String [] args) throws FileNotFoundException,IOException {
         Niveau[] niveaux = new Niveau[100];
         File out = new File("lvlout.txt");
         out.createNewFile();

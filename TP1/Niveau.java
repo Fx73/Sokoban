@@ -4,10 +4,10 @@ public class Niveau{
 
     String nom;
     int [][] map = new int[42][42];
-    int lignes = 42;
-    int colonnes = 42;
+    public int lignes = 42;
+    public int colonnes = 42;
 
-    void fixeNom(String s){nom = s;}
+    public void fixeNom(String s){nom = s;}
 
     void videCase(int i, int j){}
 
@@ -16,9 +16,9 @@ public class Niveau{
     void AjouteCaisse(int i ,int j){}
     void AjouteBut(int i ,int j){}
 
-    int lignes(){return lignes;}
-    int colonnes(){return colonnes;}
-    String nom(){return nom;}
+    public int lignes(){return lignes;}
+    public int colonnes(){return colonnes;}
+    public String nom(){return nom;}
 
     Boolean estVide(int l, int c){return true;}
 
@@ -27,6 +27,6 @@ public class Niveau{
     Boolean aBut(int l, int c){return true;}
     Boolean aCaisse(int l, int c){return true;}
 
-    void mapSet(int[][] input){map = input;}
-    int[][] mapGet(){return map;}
+    public void mapSet(int[][] input){map = input;}
+    public int[][] mapGet(){return map;}
 }
