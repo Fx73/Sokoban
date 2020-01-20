@@ -1,6 +1,6 @@
 package TP2;
 
-interface List{
+interface Sequence{
 
     void insereTete(int element);
     void insereQueue(int element);
@@ -10,7 +10,7 @@ interface List{
 }
 
 
-public class SequenceListe implements List{
+public class SequenceListe implements Sequence{
     maillon tete;
 
     public void insereTete(int element){
@@ -35,6 +35,7 @@ public class SequenceListe implements List{
     }
 
     public int extraitTete(){
+        if(tete == null) throw new RuntimeException("Sequence Vide");
         int v = tete.val;
         tete = tete.next;
         return v;

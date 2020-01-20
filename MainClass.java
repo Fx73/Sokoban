@@ -2,12 +2,25 @@ import java.io.*;
 import TP1.*;
 import TP2.*;
 
+
 public class MainClass{
 
     public static void main(String [] args){
         SequenceListe l = new SequenceListe(); 
-        
-
+        l.insereTete(2);
+        l.insereTete(1);
+        l.insereQueue(3);
+        while(!l.estVide()){
+            Print(Integer.toString(l.extraitTete()));
+        }
+         
+        SequenceTableau t = new SequenceTableau(); 
+        t.insereTete(2);
+        t.insereTete(1);
+        t.insereQueue(3);
+        while(!t.estVide()){
+            Print(Integer.toString(t.extraitTete()));
+        }
     }
 
 
@@ -48,5 +61,7 @@ public class MainClass{
 
 
 
-
+    public static void Print(String S){
+        System.out.println(S);
+    }
 }
