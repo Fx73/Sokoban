@@ -4,9 +4,9 @@ import TP2.*;
 
 public class MainClass{
 
-    public static void main1(String [] args){
+    public static void main(String [] args){
         SequenceListe l = new SequenceListe(); 
-
+        
 
     }
 
@@ -14,11 +14,11 @@ public class MainClass{
 
 
 
-    public static void main(String [] args) throws FileNotFoundException,IOException {
+    public static void mai1(String [] args) throws FileNotFoundException,IOException {
         Niveau[] niveaux = new Niveau[100];
         File out = new File("lvlout.txt");
         out.createNewFile();
-        InputStream in_stream = LecteurNiveaux.class.getResourceAsStream("levels.txt");
+        InputStream in_stream = LecteurNiveaux.class.getResourceAsStream("/levels.txt");
         OutputStream out_stream = new FileOutputStream(out);
         LecteurNiveaux lecteur = new LecteurNiveaux();
         RedacteurNiveau redacteur = new RedacteurNiveau();
