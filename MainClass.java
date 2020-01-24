@@ -1,11 +1,27 @@
 import java.io.*;
 import TP1.*;
 import TP2.*;
+import TP4.*;
 
 
 public class MainClass{
 
+
     public static void main(String [] args){
+        SequenceListe l = new SequenceListe(); 
+        l.insereTete(1);
+        l.insereQueue(2);
+        l.insereQueue(3);
+        Iterateur i = l.iterateur();
+        Print(Integer.toString( i.prochain()));
+        Print(Integer.toString( i.prochain()));
+        Print("Fin"); 
+    }
+
+
+
+    
+    public static void main2(String [] args){
         SequenceListe l = new SequenceListe(); 
         l.insereTete(2);
         l.insereTete(1);
@@ -27,7 +43,7 @@ public class MainClass{
 
 
 
-    public static void mai1(String [] args) throws FileNotFoundException,IOException {
+    public static void main1(String [] args) throws FileNotFoundException,IOException {
         Niveau[] niveaux = new Niveau[100];
         File out = new File("lvlout.txt");
         out.createNewFile();

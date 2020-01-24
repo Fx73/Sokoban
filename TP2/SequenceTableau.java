@@ -43,5 +43,15 @@ public class SequenceTableau implements Sequence{
     public boolean estVide(){
         return len == 0;
     }
+
+    public int lenght(){
+        return len;
+    }
+    public int getValue(int n){
+        return tab[n];
+    }
+    public void setValue(int val, int n){
+        tab[n]=val;
+    }
  
 }

@@ -1,17 +1,24 @@
 package TP2;
 
-interface Sequence{
+import TP4.IterateurListe;
+import TP4.Iterateur;
+
+public interface Sequence{
 
     void insereTete(int element);
     void insereQueue(int element);
     int extraitTete();
     boolean estVide();
 
+    Iterateur iterateur();
+
 }
 
 
+
 public class SequenceListe implements Sequence{
-    maillon tete;
+    public maillon tete;
+
 
     public void insereTete(int element){
         maillon nouveau = new maillon();
@@ -43,6 +50,10 @@ public class SequenceListe implements Sequence{
 
     public boolean estVide(){
         return tete == null;
+    }
+
+    public Iterateur iterateur(){
+        return new IterateurListe(this);
     }
 
 }
