@@ -8,12 +8,14 @@ public class MainClass{
 
 
     public static void main(String [] args){
-        SequenceListe l = new SequenceListe(); 
-        l.insereTete(1);
+        Sequence l = new SequenceTableau(); 
         l.insereQueue(2);
+        l.insereTete(1);
         l.insereQueue(3);
+        l.insereQueue(4);
         Iterateur i = l.iterateur();
-        Print(Integer.toString( i.prochain()));
+        while(i.aProchain())
+            Print(Integer.toString( i.prochain()));
         Print(Integer.toString( i.prochain()));
         Print("Fin"); 
     }
@@ -79,5 +81,8 @@ public class MainClass{
 
     public static void Print(String S){
         System.out.println(S);
+    }
+    public static void Print(int n){
+        System.out.println(Integer.toString(n));
     }
 }

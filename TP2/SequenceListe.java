@@ -3,21 +3,8 @@ package TP2;
 import TP4.IterateurListe;
 import TP4.Iterateur;
 
-public interface Sequence{
-
-    void insereTete(int element);
-    void insereQueue(int element);
-    int extraitTete();
-    boolean estVide();
-
-    Iterateur iterateur();
-
-}
-
-
-
 public class SequenceListe implements Sequence{
-    public maillon tete;
+    maillon tete;
 
 
     public void insereTete(int element){
@@ -33,12 +20,16 @@ public class SequenceListe implements Sequence{
         nouveau.val = element;
         nouveau.next = null;
 
-        maillon last = tete;
-        while (last.next != null){
-            last = last.next;
+        if(tete == null)
+            tete = nouveau;
+        else{
+            maillon last = tete;
+            while (last.next != null){
+                last = last.next;
+            }
+            last.next = nouveau;
         }
 
-        last.next = nouveau;
     }
 
     public int extraitTete(){
@@ -52,8 +43,19 @@ public class SequenceListe implements Sequence{
         return tete == null;
     }
 
-    public Iterateur iterateur(){
+    public Iterateur iterateur() {
         return new IterateurListe(this);
+    }
+
+    @Override
+	public SequenceListe clone() {
+        SequenceListe l = new SequenceListe();
+        maillon t = tete;
+        while(t!=null){
+            l.insereQueue(t.val);
+            t=t.next;
+        }
+        return l;
     }
 
 }

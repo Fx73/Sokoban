@@ -2,10 +2,13 @@ package TP2;
 
 import java.util.Arrays;
 
+import TP4.IterateurTableau;
+import TP4.Iterateur;
+
 //Interface Sequence externe
 
 public class SequenceTableau implements Sequence{
-    private int MAXLEN = 1000;
+    public int MAXLEN = 1000;
 
     int tab[] = new int[MAXLEN];
     int first = 0;
@@ -44,8 +47,15 @@ public class SequenceTableau implements Sequence{
         return len == 0;
     }
 
+
+    public Iterateur iterateur(){
+        return new IterateurTableau(this);
+    }
     public int lenght(){
         return len;
+    }
+    public int startingAt(){
+        return first;
     }
     public int getValue(int n){
         return tab[n];
