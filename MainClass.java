@@ -1,24 +1,28 @@
 import java.io.*;
+import java.lang.ProcessBuilder.Redirect.Type;
+
 import TP1.*;
+import TP3.Fabrique;
 import TP5.*;
 
 
 public class MainClass{
 
-    public static void main(String [] args){
+    public static void main(String[] args) {
+        Fabrique<String> fabrique = new Fabrique<String>();
         Print("Sequence");
-        Sequence<Integer> l = new SequenceTableau<>(); 
-        l.insereQueue(2);
-        l.insereTete(1);
-        l.insereQueue(3);
-        l.insereQueue(4);
-        Iterateur<Integer> i = l.iterateur();
+        Sequence<String> l = fabrique.sequence("liste");
+        l.insereQueue("2");
+        l.insereTete("1");
+        l.insereQueue("3");
+        l.insereQueue("4");
+        Iterateur<String> i = l.iterateur();
         while(i.aProchain())
-            Print(Integer.toString( i.prochain()));
-        Print(Integer.toString( i.prochain()));
+            Print(i.prochain());
+        Print(i.prochain());
 
         Print("FAP");
-        FAP<String> f = new FAPListe<>();
+        FAP<String> f = fabrique.fap("liste");
         f.Enfiler("First", 10);
         f.Enfiler("Third", 6);
         f.Enfiler("Second", 7);
@@ -39,8 +43,8 @@ public class MainClass{
         l.insereQueue(4);
         TP4.Iterateur i = l.iterateur();
         while(i.aProchain())
-            Print(Integer.toString( i.prochain()));
-        Print(Integer.toString( i.prochain()));
+            Print(i.prochain());
+        Print(i.prochain());
         Print("Fin"); 
     }
 
@@ -53,7 +57,7 @@ public class MainClass{
         l.insereTete(1);
         l.insereQueue(3);
         while(!l.estVide()){
-            Print(Integer.toString(l.extraitTete()));
+            Print(l.extraitTete());
         }
          
         TP2.SequenceTableau t = new TP2.SequenceTableau(); 
@@ -61,7 +65,7 @@ public class MainClass{
         t.insereTete(1);
         t.insereQueue(3);
         while(!t.estVide()){
-            Print(Integer.toString(t.extraitTete()));
+            Print(t.extraitTete());
         }
     }
 

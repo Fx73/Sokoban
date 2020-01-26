@@ -1,0 +1,18 @@
+package TP3;
+
+import TP5.*;
+
+public class FabriqueFAP<T> implements Fabrique<T> {
+
+      public FAP<T> fabrique(String type) {
+        if(type.equals("liste")) {
+          return new FAPListe<>();
+        } 
+        else if(type.equals("tableau")) {
+          return new FAPTableau<>();
+        } 
+        System.out.println("Impossible de créer une FAP " + type);
+        return null;
+      }
+
+}
