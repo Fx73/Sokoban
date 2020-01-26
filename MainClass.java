@@ -6,7 +6,8 @@ import TP5.*;
 public class MainClass{
 
     public static void main(String [] args){
-        Sequence<Integer> l = new SequenceTableau<Integer>(); 
+        Print("Sequence");
+        Sequence<Integer> l = new SequenceTableau<>(); 
         l.insereQueue(2);
         l.insereTete(1);
         l.insereQueue(3);
@@ -15,6 +16,16 @@ public class MainClass{
         while(i.aProchain())
             Print(Integer.toString( i.prochain()));
         Print(Integer.toString( i.prochain()));
+
+        Print("FAP");
+        FAP<String> f = new FAPListe<>();
+        f.Enfiler("First", 10);
+        f.Enfiler("Third", 6);
+        f.Enfiler("Second", 7);
+        f.Enfiler("Last", 0);
+        while(!f.estVide()){
+            Print(f.Defiler());
+        }
         Print("Fin"); 
     }
 

@@ -1,26 +1,24 @@
 package TP5;
 
 public class SequenceListe<T> implements Sequence<T>{
-    maillon<T> tete;
+    maillon tete;
 
 
     public void insereTete(T element){
-        maillon<T> nouveau = new maillon<T>();
-        nouveau.val = element;
+        maillon nouveau = new maillon(element);
         nouveau.next = tete;
 
         tete = nouveau;
     }
 
     public void insereQueue(T element){
-        maillon<T> nouveau = new maillon<T>();
-        nouveau.val = element;
+        maillon nouveau = new maillon(element);
         nouveau.next = null;
 
         if(tete == null)
             tete = nouveau;
         else{
-            maillon<T> last = tete;
+            maillon last = tete;
             while (last.next != null){
                 last = last.next;
             }
@@ -47,7 +45,7 @@ public class SequenceListe<T> implements Sequence<T>{
     @Override
 	public SequenceListe<T> clone() {
         SequenceListe<T> l = new SequenceListe<T>();
-        maillon<T> t = tete;
+        maillon t = tete;
         while(t!=null){
             l.insereQueue(t.val);
             t=t.next;
@@ -55,8 +53,14 @@ public class SequenceListe<T> implements Sequence<T>{
         return l;
     }
 
-}
-class maillon<T>{
-    T val;
-    maillon<T> next;
+
+
+    class maillon{
+        T val;
+        maillon next;
+    
+        public maillon(T v){
+            val = v;
+        }
+    }
 }
