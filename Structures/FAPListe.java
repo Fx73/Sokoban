@@ -1,4 +1,4 @@
-package TP5;
+package Structures;
 
 public class FAPListe<T> implements FAP<T>{
 

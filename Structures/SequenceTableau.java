@@ -1,4 +1,4 @@
-package TP5;
+package Structures;
 
 import java.util.Arrays;
 

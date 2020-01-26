@@ -1,4 +1,4 @@
-package TP5;
+package Structures;
 
 public class SequenceListe<T> implements Sequence<T>{
     maillon tete;

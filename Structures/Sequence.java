@@ -1,4 +1,4 @@
-package TP5;
+package Structures;
 
 public interface Sequence<T>{
 

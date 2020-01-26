@@ -1,4 +1,4 @@
-package TP5;
+package Structures;
 
 public class IterateurListe<T> implements Iterateur<T> {
     SequenceListe<T> list;

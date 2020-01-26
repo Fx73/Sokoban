@@ -1,4 +1,4 @@
-package TP5;
+package Structures;
 
 public class IterateurTableau<T> implements Iterateur<T> {
 
