@@ -5,8 +5,6 @@ import java.util.Arrays;
 import TP4.IterateurTableau;
 import TP4.Iterateur;
 
-//Interface Sequence externe
-
 public class SequenceTableau implements Sequence{
     public int MAXLEN = 1000;
 

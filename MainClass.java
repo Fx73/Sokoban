@@ -1,19 +1,32 @@
 import java.io.*;
 import TP1.*;
-import TP2.*;
-import TP4.*;
+import TP5.*;
 
 
 public class MainClass{
 
-
     public static void main(String [] args){
-        Sequence l = new SequenceTableau(); 
+        Sequence<Integer> l = new SequenceTableau<Integer>(); 
         l.insereQueue(2);
         l.insereTete(1);
         l.insereQueue(3);
         l.insereQueue(4);
-        Iterateur i = l.iterateur();
+        Iterateur<Integer> i = l.iterateur();
+        while(i.aProchain())
+            Print(Integer.toString( i.prochain()));
+        Print(Integer.toString( i.prochain()));
+        Print("Fin"); 
+    }
+
+
+
+    public static void main4(String [] args){
+        TP2.Sequence l = new TP2.SequenceTableau(); 
+        l.insereQueue(2);
+        l.insereTete(1);
+        l.insereQueue(3);
+        l.insereQueue(4);
+        TP4.Iterateur i = l.iterateur();
         while(i.aProchain())
             Print(Integer.toString( i.prochain()));
         Print(Integer.toString( i.prochain()));
@@ -24,7 +37,7 @@ public class MainClass{
 
     
     public static void main2(String [] args){
-        SequenceListe l = new SequenceListe(); 
+        TP2.SequenceListe l = new TP2.SequenceListe(); 
         l.insereTete(2);
         l.insereTete(1);
         l.insereQueue(3);
@@ -32,7 +45,7 @@ public class MainClass{
             Print(Integer.toString(l.extraitTete()));
         }
          
-        SequenceTableau t = new SequenceTableau(); 
+        TP2.SequenceTableau t = new TP2.SequenceTableau(); 
         t.insereTete(2);
         t.insereTete(1);
         t.insereQueue(3);
