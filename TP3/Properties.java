@@ -6,6 +6,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import Global.Configuration;
+import Global.Tools;
+
+
 public class Properties {
     //MACROS
     final static String path = "rsc/";
@@ -26,7 +30,7 @@ public class Properties {
                         break;
                 
                     default:
-                        Print("Erreur dans le fichier de proprietes");
+                        Tools.Print("Erreur dans le fichier de proprietes");
                         break;
                 }
             }
@@ -41,13 +45,6 @@ public class Properties {
         out_stream.write("Sequence=Tableau\n");
 
         out_stream.close();
-    }
-
-    public static void Print(String S){
-        System.out.println(S);
-    }
-    public static void Print(int n){
-        System.out.println(Integer.toString(n));
     }
 
 }

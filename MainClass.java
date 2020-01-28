@@ -1,6 +1,7 @@
 import java.io.*;
 
 import Global.Configuration;
+import Global.Tools;
 import TP1.*;
 import TP3.Fabrique;
 import TP3.Properties;
@@ -13,7 +14,7 @@ public class MainClass{
     public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
         Properties p = new Properties();
         p.Load();
-        Properties.Print(p.sequenceImplement);
+        Tools.Print(p.sequenceImplement);
         if(p.sequenceImplement == "Tableau")
             p.sequenceImplement = "Liste";
         else
@@ -23,7 +24,7 @@ public class MainClass{
         Configuration.instance();
         Print((String)Configuration.Lis("sequenceImplement"));
 
-        Sequence<String> l = Configuration.instance.FabriqueSequence();
+        Sequence<String> l = (Sequence<String>) Configuration.instance().FabriqueSequence();
 
 
     }

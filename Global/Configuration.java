@@ -6,8 +6,8 @@ import java.util.NoSuchElementException;
 import Structures.*;
 
 
-public final class Configuration<T> {
-    private static volatile Configuration instance = null;
+public final class Configuration {
+    static volatile Configuration instance = null;
     public static Configuration instance(){
         if(instance == null)
             instance = new Configuration();
@@ -33,7 +33,7 @@ public final class Configuration<T> {
     }
 
 
-    public TP5.Sequence<String> FabriqueSequence(){
+    public <T> Sequence<T> FabriqueSequence(){
         if(sequenceImplement.equals("Liste")) {
             return new SequenceListe<T>();
           } 
@@ -43,4 +43,5 @@ public final class Configuration<T> {
           System.out.println("Impossible de créer une sequence " + sequenceImplement);
           return null;
     }
+
 }
