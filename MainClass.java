@@ -1,14 +1,37 @@
 import java.io.*;
-import java.lang.ProcessBuilder.Redirect.Type;
 
+import Global.Configuration;
 import TP1.*;
 import TP3.Fabrique;
+import TP3.Properties;
 import TP5.*;
 
 
 public class MainClass{
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
+        Properties p = new Properties();
+        p.Load();
+        Properties.Print(p.sequenceImplement);
+        if(p.sequenceImplement == "Tableau")
+            p.sequenceImplement = "Liste";
+        else
+            p.sequenceImplement = "Tableau";
+
+        p.Store();
+        Configuration.instance();
+        Print((String)Configuration.Lis("sequenceImplement"));
+
+        Sequence<String> l = Configuration.instance.FabriqueSequence();
+
+
+    }
+
+
+
+
+    public static void main5(String[] args) {
         Fabrique<String> fabrique = new Fabrique<String>();
         Print("Sequence");
         Sequence<String> l = fabrique.sequence("liste");
