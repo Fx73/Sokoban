@@ -13,17 +13,16 @@ public class MainClass{
 
 
     public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
-        Properties p = new Properties();
-        p.Load();
-        Tools.Print(p.sequenceImplement);
-        if(p.sequenceImplement == "Tableau")
-            p.sequenceImplement = "Liste";
+        Properties.Load();
+        Tools.Print(Configuration.Lis("Sequence"));
+        if(Configuration.Lis("Sequence") == "Tableau")
+            Configuration.Ecris("Sequence", "Liste");
         else
-            p.sequenceImplement = "Tableau";
+            Configuration.Ecris("Sequence", "Tableau");
 
-        p.Store();
+        Properties.Store();
         Configuration.instance();
-        Print((String)Configuration.Lis("sequenceImplement"));
+        Print((String)Configuration.Lis("Sequence"));
 
         Sequence<String> l = Configuration.instance().FabriqueSequence();
         l.insereQueue("2");
@@ -32,6 +31,9 @@ public class MainClass{
         while(i.aProchain())
             Print(i.prochain());
         Print(i.prochain());
+
+        Object log = Configuration.logger();
+
         Print("Fin"); 
 
     }
