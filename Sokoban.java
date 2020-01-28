@@ -9,7 +9,7 @@ import TP3.Fabrique;
 import TP3.Properties;
 
 
-public class MainClass{
+public class Sokoban{
 
 
     public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
