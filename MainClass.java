@@ -2,10 +2,11 @@ import java.io.*;
 
 import Global.Configuration;
 import Global.Tools;
+import Structures.Iterateur;
+import Structures.Sequence;
 import TP1.*;
 import TP3.Fabrique;
 import TP3.Properties;
-import TP5.*;
 
 
 public class MainClass{
@@ -24,8 +25,14 @@ public class MainClass{
         Configuration.instance();
         Print((String)Configuration.Lis("sequenceImplement"));
 
-        Sequence<String> l = (Sequence<String>) Configuration.instance().FabriqueSequence();
-
+        Sequence<String> l = Configuration.instance().FabriqueSequence();
+        l.insereQueue("2");
+        l.insereTete("1");
+        Iterateur<String> i = l.iterateur();
+        while(i.aProchain())
+            Print(i.prochain());
+        Print(i.prochain());
+        Print("Fin"); 
 
     }
 
@@ -35,18 +42,18 @@ public class MainClass{
     public static void main5(String[] args) {
         Fabrique<String> fabrique = new Fabrique<String>();
         Print("Sequence");
-        Sequence<String> l = fabrique.sequence("liste");
+        TP5.Sequence<String> l = fabrique.sequence("liste");
         l.insereQueue("2");
         l.insereTete("1");
         l.insereQueue("3");
         l.insereQueue("4");
-        Iterateur<String> i = l.iterateur();
+        TP5.Iterateur<String> i = l.iterateur();
         while(i.aProchain())
             Print(i.prochain());
         Print(i.prochain());
 
         Print("FAP");
-        FAP<String> f = fabrique.fap("liste");
+        TP5.FAP<String> f = fabrique.fap("liste");
         f.Enfiler("First", 10);
         f.Enfiler("Third", 6);
         f.Enfiler("Second", 7);
