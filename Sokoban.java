@@ -2,12 +2,10 @@ import java.io.*;
 
 import Global.Configuration;
 import Global.Tools;
+import Global.Properties;
 import Structures.Iterateur;
 import Structures.Sequence;
 import TP1.*;
-import TP3.Fabrique;
-import TP3.Properties;
-
 
 public class Sokoban{
 

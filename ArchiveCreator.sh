@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FOLDERS=(Global Structures)
+FOLDERS=(Global Structures TP1)
 echo "Compilation des modules"
 for folder in ${FOLDERS[*]}
 do
@@ -8,11 +8,9 @@ do
 done
 
 javac Sokoban.java
-javac TP3/Properties.java
-
 
 echo "Creation de l'archive"
-jar cfe Sokoban.jar Sokoban *.class ${FOLDERS[*]}/*.class rsc/* TP3/Properties.class
+jar cfe Sokoban.jar Sokoban *.class ${FOLDERS[*]}/*.class rsc/* 
 
 echo "Nettoyage"
 find . -type f -name '*.class' -delete
