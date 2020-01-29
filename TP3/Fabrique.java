@@ -2,7 +2,7 @@ package TP3;
 
 import TP5.*;
 
-public class Fabrique<T> {
+public class Fabrique<T extends Comparable<T>>{
 
     public Sequence<T> sequence(String type)  {
         if(type.equals("Liste")) {
@@ -25,5 +25,17 @@ public class Fabrique<T> {
         System.out.println("Impossible de créer une FAP " + type);
         return null;
       }
+
+       public FAPlight<T > faplight(String type) {
+        if(type.equals("Liste")) {
+          return new FAPlightListe<T>();
+        } 
+        else if(type.equals("Tableau")) {
+          return new FAPlightTableau<T>();
+        } 
+        System.out.println("Impossible de créer une FAP light " + type);
+        return null;
+      }
+
 
 }

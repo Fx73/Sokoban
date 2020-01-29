@@ -1,9 +1,17 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
     "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Sokoban",
+            "request": "launch",
+            "mainClass": "Sokoban"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - MainClass",
+            "request": "launch",
+            "mainClass": "MainClass"
+        },
         {
             "type": "java",
             "name": "CodeLens (Launch) - Sokoban",
@@ -12,13 +20,7 @@
         },
         {
             "type": "java",
-            "name": "Debug (Launch) - Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-MainClass",
+            "name": "CodeLens (Launch) - MainClass",
             "request": "launch",
             "mainClass": "MainClass"
         }

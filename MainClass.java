@@ -12,7 +12,7 @@ import TP3.Properties;
 public class MainClass{
 
 
-    public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
+    public static void main3(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
         Properties.Load();
         Tools.Print(Configuration.Lis("Sequence"));
         if(Configuration.Lis("Sequence") == "Tableau")
@@ -41,10 +41,10 @@ public class MainClass{
 
 
 
-    public static void main5(String[] args) {
+    public static void main(String[] args) {
         Fabrique<String> fabrique = new Fabrique<String>();
         Print("Sequence");
-        TP5.Sequence<String> l = fabrique.sequence("liste");
+        TP5.Sequence<String> l = fabrique.sequence("Liste");
         l.insereQueue("2");
         l.insereTete("1");
         l.insereQueue("3");
@@ -55,7 +55,7 @@ public class MainClass{
         Print(i.prochain());
 
         Print("FAP");
-        TP5.FAP<String> f = fabrique.fap("liste");
+        TP5.FAP<String> f = fabrique.fap("Liste");
         f.Enfiler("First", 10);
         f.Enfiler("Third", 6);
         f.Enfiler("Second", 7);
@@ -63,6 +63,17 @@ public class MainClass{
         while(!f.estVide()){
             Print(f.Defiler());
         }
+
+        Print("FAPlight");
+        TP5.FAPlight<String> f2 = fabrique.faplight("Tableau");
+        f2.Enfiler("A");
+        f2.Enfiler("D");
+        f2.Enfiler("B");
+        f2.Enfiler("C");
+        while(!f2.estVide()){
+            Print(f2.Defiler());
+        }
+
         Print("Fin"); 
     }
 
