@@ -9,8 +9,13 @@ import TP1.*;
 
 public class Sokoban{
 
-
     public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
+        Properties.Load();
+
+    
+    
+    }
+    public static void test(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
         Properties.Load();
         Tools.Print(Configuration.Lis("Sequence"));
         if(Configuration.Lis("Sequence") == "Tableau")
