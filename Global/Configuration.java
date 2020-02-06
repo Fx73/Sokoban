@@ -1,10 +1,11 @@
 package Global;
 
 import java.lang.reflect.Field;
+import java.lang.ClassLoader;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.io.InputStream;
 import Structures.*;
 
 
@@ -62,6 +63,11 @@ public final class Configuration {
         l.setLevel((Level.parse(LogLevel)));
         return l;
 
+    }
+
+    public static InputStream charge(String path){
+        InputStream stream = Configuration.class.getClassLoader().getResourceAsStream(path);
+        return stream;
     }
 
 }

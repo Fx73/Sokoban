@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - DemoFenetre",
+            "request": "launch",
+            "mainClass": "TP6.DemoFenetre",
+            "projectName": "Sokoban_d45f0d15"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Sokoban",
             "request": "launch",
             "mainClass": "Sokoban"

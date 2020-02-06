@@ -24,6 +24,7 @@
  *          Domaine universitaire
  *          38401 Saint Martin d'Hères
  */
+package TP6;
 
 import Global.Configuration;
 
