@@ -66,7 +66,7 @@ public final class Configuration {
     }
 
     public static InputStream charge(String path){
-        InputStream stream = Configuration.class.getClassLoader().getResourceAsStream(path);
+        InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
         return stream;
     }
 
