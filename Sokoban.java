@@ -15,8 +15,7 @@ public class Sokoban{
     public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
         Properties.Load();
         Niveau[] niveaux = new Niveau[100];
-        new LecteurNiveaux().ChargerNiveaux("/levels.txt", niveaux);
-
+        new LecteurNiveaux().ChargerNiveaux("levels.txt", niveaux);
         SwingUtilities.invokeLater(new InterfaceGraphique(niveaux));
     
     }

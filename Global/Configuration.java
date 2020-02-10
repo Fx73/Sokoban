@@ -68,9 +68,7 @@ public final class Configuration {
     }
 
     public static InputStream charge(String path){
-        String rscpath = "resources/";
         InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
-        //InputStream stream = new InputStream (new FileReader(rscpath + path));
         return stream;
     }
 

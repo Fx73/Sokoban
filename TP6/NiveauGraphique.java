@@ -26,8 +26,8 @@ class NiveauGraphique extends JComponent {
             caisse = ImageIO.read( Configuration.charge("Images/Caisse.png"));
 			caissesurbut = ImageIO.read( Configuration.charge("Images/Caisse_sur_but.png"));
 			mur = ImageIO.read( Configuration.charge("Images/Mur.png"));
-			sol = ImageIO.read( Configuration.charge("Images/Pousseur.png"));
-			pousseur = ImageIO.read( Configuration.charge("Images/Sol.png"));
+			sol = ImageIO.read( Configuration.charge("Images/Sol.png"));
+			pousseur = ImageIO.read( Configuration.charge("Images/Pousseur.png"));
 
 		} catch (Exception e) {
 			Configuration.instance().logger().severe("Impossible de charger l'image");
@@ -38,7 +38,7 @@ class NiveauGraphique extends JComponent {
     }
 
     public void paintComponent(Graphics g) {
-		System.out.println("Entree dans paintComponent : ");
+		System.out.println("Entree dans paintComponent : map ("+niveau.lignes+"x"+niveau.colonnes+")");
 
 		// Graphics 2D est le vrai type de l'objet passé en paramètre
 		// Le cast permet d'avoir acces a un peu plus de primitives de dessin
@@ -56,12 +56,15 @@ class NiveauGraphique extends JComponent {
 		drawable.fillRect(0, 0, width, height);
 		drawable.setPaint(Color.black);
 
+		//Calcul de la taille d'un objet
+        int imgsize = width/niveau.colonnes;
+
 		// On affiche
-        drawable.drawImage(pousseur, center.x-20, center.y-20, 40, 40, null);
         int[][]map = niveau.mapGet();
         for(int i = 0; i< niveau.lignes;i++)
-            for(int j = 0; i< niveau.colonnes;j++){
-                drawable.drawImage(GetImage(map[i][j]), ((center.x - niveau.colonnes * 5) + i * 5), ((center.y - niveau.lignes * 5) + j * 5), 10, 10, null);
+            for(int j = 0; j< niveau.colonnes;j++){
+                drawable.drawImage(GetImage(map[j][i]), ((center.x - niveau.colonnes * (imgsize/2)) + i * imgsize), ((center.y - niveau.lignes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
+
             }
 
 
@@ -70,8 +73,15 @@ class NiveauGraphique extends JComponent {
 
     Image GetImage(int a){
         switch(a){
-
-            default : return pousseur;
+            case 35: return mur;
+            case 32: return sol;
+            case 46: return but;
+            case 36 : return caisse;
+            case 64 : return pousseur;
+            case 0: return mur;
+            default :
+                Configuration.instance().logger().warning("Objet inconnue dans le niveau");
+                return pousseur;
         }
     }
 

@@ -9,7 +9,8 @@ public class LecteurNiveaux{
 
 
 public void ChargerNiveaux(String lvlpath, Niveau[] niveaux)throws IOException{
-    InputStream in_stream = LecteurNiveaux.class.getResourceAsStream(lvlpath);
+    String rsclvlpath = "Levels/";
+    InputStream in_stream = ClassLoader.getSystemClassLoader().getResourceAsStream(rsclvlpath + lvlpath);
     int[][] niv = this.lisProchainNiveau(in_stream);
     int i =0;
 
@@ -41,7 +42,6 @@ public int[][] lisProchainNiveau(InputStream stream) throws IOException {
             i++;
             colonnes = max(j,colonnes);
             j=0;
-            System.out.print('\n');
         }
         else if (data[0] == ';'){
             nom = ReadLine(stream);
@@ -50,7 +50,6 @@ public int[][] lisProchainNiveau(InputStream stream) throws IOException {
         }
         else{
             fin = false;
-            System.out.print((char)data[0]);
             map[i][j]=data[0];
             j++;
         }
