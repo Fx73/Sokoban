@@ -14,27 +14,28 @@ public class InterfaceGraphique implements Runnable {
 	Integer lvlno = 0;
 	Boolean maximized = false;
 	JFrame frame;
+	KeyListener MyKeyListener=new KeyListener(){
+				@Override
+				public void keyTyped(KeyEvent keyEvent) { }
+
+				@Override
+				public void keyPressed(KeyEvent keyEvent) {
+					if (keyEvent.getKeyChar() == 'f')
+						toggleFullScreen();
+				}
+				@Override
+				public void keyReleased(KeyEvent keyEvent) { }
+			};
+
 
 	public InterfaceGraphique(Niveau[] n){
 		niveaux = n;
-		this.addKeyListener(new KeyListener(){
-			@Override
-			public void keyTyped(KeyEvent keyEvent) { }
-
-			@Override
-			public void keyPressed(KeyEvent keyEvent) {
-				if (keyEvent.getKeyChar() == 'f')
-					toggleFullScreen();
-			}
-			@Override
-			public void keyReleased(KeyEvent keyEvent) { }
-		});
 	}
 
 	public void run() {
 		// Creation d'une fenetre
 		frame = new JFrame("Sokoban : Niveau " + lvlno.toString() + " : " + niveaux[lvlno].nom() );
-
+		//frame.addKeyListener(MyKeyListener);
 		// Ajout de notre composant de dessin dans la fenetre
 		frame.add(new NiveauGraphique(niveaux[lvlno]));
 

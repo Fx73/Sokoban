@@ -37,7 +37,7 @@ public int[][] lisProchainNiveau(InputStream stream) throws IOException {
     if(data[0]==0)return null;
 
     while(data[0] != 0){
-        if(data[0] == '\n' ){
+        if(data[0] == '\n'){
             fin = true;
             i++;
             colonnes = max(j,colonnes);
@@ -50,13 +50,14 @@ public int[][] lisProchainNiveau(InputStream stream) throws IOException {
         }
         else{
             fin = false;
-            map[i][j]=data[0];
+            if (data[0] != '\r')
+                map[i][j]=data[0];
             j++;
         }
         stream.read(data);
 
         //Niveau suivant
-        if(data[0] == '\n' && fin)
+        if((data[0] == '\n' || data[0] == '\r') && fin)
             break;
         //Taille depassee
         if(j>=41 || i>=41){

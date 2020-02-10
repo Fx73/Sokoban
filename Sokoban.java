@@ -17,7 +17,7 @@ public class Sokoban{
         Niveau[] niveaux = new Niveau[100];
         new LecteurNiveaux().ChargerNiveaux("levels.txt", niveaux);
         SwingUtilities.invokeLater(new InterfaceGraphique(niveaux));
-    
+
     }
 
 
