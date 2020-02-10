@@ -20,7 +20,7 @@ public class InterfaceGraphique implements Runnable {
 
 				@Override
 				public void keyPressed(KeyEvent keyEvent) {
-					if (keyEvent.getKeyChar() == 'f')
+					if (keyEvent.getKeyCode() == KeyEvent.VK_F12)
 						toggleFullScreen();
 				}
 				@Override
@@ -35,12 +35,13 @@ public class InterfaceGraphique implements Runnable {
 	public void run() {
 		// Creation d'une fenetre
 		frame = new JFrame("Sokoban : Niveau " + lvlno.toString() + " : " + niveaux[lvlno].nom() );
-		//frame.addKeyListener(MyKeyListener);
+
 		// Ajout de notre composant de dessin dans la fenetre
 		frame.add(new NiveauGraphique(niveaux[lvlno]));
 
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addKeyListener(MyKeyListener);
 
 		// On fixe la taille et on demarre
 		frame.setSize(600, 600);
@@ -54,7 +55,7 @@ public class InterfaceGraphique implements Runnable {
 			maximized = false;
 		} else {
 			device.setFullScreenWindow(frame);
-			maximized = false;
+			maximized = true;
 		}
 	}
 

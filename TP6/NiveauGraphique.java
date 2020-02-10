@@ -6,7 +6,10 @@ import javax.imageio.ImageIO;
 
 import Global.Configuration;
 import TP1.Niveau;
- 
+
+import static java.lang.Integer.min;
+import static java.lang.Integer.max;
+
 
 class NiveauGraphique extends JComponent {
 
@@ -52,19 +55,19 @@ class NiveauGraphique extends JComponent {
 		Point center = new Point(width/2, height/2);
 
 		// On efface tout
-		drawable.setPaint(Color.white);
+		drawable.setPaint(Color.black);
 		drawable.fillRect(0, 0, width, height);
 		drawable.setPaint(Color.black);
 
 		//Calcul de la taille d'un objet
-        int imgsize = width/niveau.colonnes;
+        int imgsize = min(width / niveau.lignes ,height / niveau.colonnes);
 
 		// On affiche
         int[][]map = niveau.mapGet();
         for(int i = 0; i< niveau.lignes;i++)
             for(int j = 0; j< niveau.colonnes;j++){
-                drawable.drawImage(GetImage(map[j][i]), ((center.x - niveau.colonnes * (imgsize/2)) + i * imgsize), ((center.y - niveau.lignes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
-
+                /*Image a gauche*/ //drawable.drawImage(GetImage(map[j][i]), 1+i * imgsize,  1+j * imgsize, imgsize, imgsize, null);
+                /*Image au centre*/ drawable.drawImage(GetImage(map[j][i]), ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
             }
 
 
