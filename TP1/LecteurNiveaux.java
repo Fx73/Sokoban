@@ -8,6 +8,24 @@ public class LecteurNiveaux{
     public int colonnes = 0;
 
 
+public void ChargerNiveaux(String lvlpath, Niveau[] niveaux)throws IOException{
+    InputStream in_stream = LecteurNiveaux.class.getResourceAsStream(lvlpath);
+    int[][] niv = this.lisProchainNiveau(in_stream);
+    int i =0;
+
+    while(niv != null){
+        niveaux[i] = new Niveau();
+        niveaux[i].mapSet(niv);
+        niveaux[i].lignes = this.lignes;
+        niveaux[i].colonnes = this.colonnes;
+        niveaux[i].fixeNom(this.nom);
+        niv = this.lisProchainNiveau(in_stream);
+        i++;
+    }
+
+}
+
+
 public int[][] lisProchainNiveau(InputStream stream) throws IOException {
     int [][] map = new int[42][42];
     boolean fin = false;

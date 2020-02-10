@@ -12,7 +12,7 @@ import Global.Tools;
 
 public class Properties {
     //MACROS
-    final static String path = "rsc/";
+    final static String path = "resources/";
 
 
     public static void Load()throws IOException{

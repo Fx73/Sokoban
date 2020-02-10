@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.InputStream;
+import java.io.FileReader;
+
 import Structures.*;
 
 
@@ -66,7 +68,9 @@ public final class Configuration {
     }
 
     public static InputStream charge(String path){
+        String rscpath = "resources/";
         InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
+        //InputStream stream = new InputStream (new FileReader(rscpath + path));
         return stream;
     }
 

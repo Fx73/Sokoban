@@ -1,4 +1,6 @@
 import java.io.*;
+import javax.swing.*;
+
 
 import Global.Configuration;
 import Global.Tools;
@@ -6,15 +8,25 @@ import Global.Properties;
 import Structures.Iterateur;
 import Structures.Sequence;
 import TP1.*;
+import TP6.InterfaceGraphique;
 
 public class Sokoban{
 
     public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
         Properties.Load();
+        Niveau[] niveaux = new Niveau[100];
+        new LecteurNiveaux().ChargerNiveaux("/levels.txt", niveaux);
 
-    
+        SwingUtilities.invokeLater(new InterfaceGraphique(niveaux));
     
     }
+
+
+
+
+
+
+
     public static void test(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
         Properties.Load();
         Tools.Print(Configuration.Lis("Sequence"));
