@@ -1,14 +1,13 @@
 package TP6;
 import javax.swing.*;
 import java.awt.*;
-import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import Global.Configuration;
 import TP1.Niveau;
 
+import static Global.Tools.*;
 import static java.lang.Integer.min;
-import static java.lang.Integer.max;
 
 
 class NiveauGraphique extends JComponent {
@@ -16,9 +15,27 @@ class NiveauGraphique extends JComponent {
     Image but;
     Image caisse;
     Image caissesurbut;
-    Image mur;
     Image sol;
     Image pousseur;
+
+
+    Image mur;
+    Image murseulgauche;
+    Image murseuldroit;
+    Image murseulhaut;
+    Image murseulbas;
+    Image murgauche;
+    Image murdroit;
+    Image murhaut;
+    Image murbas;
+    Image murhautgauche;
+    Image murhautdroit;
+    Image murbasgauche;
+    Image murbasdroit;
+    Image murgauchedroit;
+    Image murhautbas;
+    Image murplein;
+
     
     Niveau niveau;
 
@@ -28,11 +45,29 @@ class NiveauGraphique extends JComponent {
             but = ImageIO.read( Configuration.charge("Images/But.png"));
             caisse = ImageIO.read( Configuration.charge("Images/Caisse.png"));
 			caissesurbut = ImageIO.read( Configuration.charge("Images/Caisse_sur_but.png"));
-			mur = ImageIO.read( Configuration.charge("Images/Mur.png"));
-			sol = ImageIO.read( Configuration.charge("Images/Sol.png"));
+            sol = ImageIO.read( Configuration.charge("Images/Sol.png"));
 			pousseur = ImageIO.read( Configuration.charge("Images/Pousseur.png"));
+            mur = ImageIO.read( Configuration.charge("Images/Murs/Mur.png"));
 
-		} catch (Exception e) {
+
+            murseulgauche = ImageIO.read( Configuration.charge("Images/Murs/Murseulgauche.png"));
+            murseuldroit = ImageIO.read( Configuration.charge("Images/Murs/Murseuldroit.png"));
+            murseulhaut = ImageIO.read( Configuration.charge("Images/Murs/Murseulhaut.png"));
+            murseulbas = ImageIO.read( Configuration.charge("Images/Murs/Murseulbas.png"));
+            murgauche = ImageIO.read( Configuration.charge("Images/Murs/Murgauche.png"));
+            murdroit = ImageIO.read( Configuration.charge("Images/Murs/Murdroit.png"));
+            murhaut = ImageIO.read( Configuration.charge("Images/Murs/Murhaut.png"));
+            murbas = ImageIO.read( Configuration.charge("Images/Murs/Murbas.png"));
+            murhautgauche = ImageIO.read( Configuration.charge("Images/Murs/Murhautgauche.png"));
+            murhautdroit = ImageIO.read( Configuration.charge("Images/Murs/Murhautdroit.png"));
+            murbasgauche = ImageIO.read( Configuration.charge("Images/Murs/Murbasgauche.png"));
+            murbasdroit = ImageIO.read( Configuration.charge("Images/Murs/Murbasdroit.png"));
+            murplein = ImageIO.read( Configuration.charge("Images/Murs/Murplein.png"));
+            murhautbas = ImageIO.read( Configuration.charge("Images/Murs/Murhautbas.png"));
+            murgauchedroit = ImageIO.read( Configuration.charge("Images/Murs/Murgauchedroit.png"));
+
+
+        } catch (Exception e) {
 			Configuration.instance().logger().severe("Impossible de charger l'image");
 			System.exit(1);
         }
@@ -66,26 +101,67 @@ class NiveauGraphique extends JComponent {
         int[][]map = niveau.mapGet();
         for(int i = 0; i< niveau.lignes;i++)
             for(int j = 0; j< niveau.colonnes;j++){
-                /*Image a gauche*/ //drawable.drawImage(GetImage(map[j][i]), 1+i * imgsize,  1+j * imgsize, imgsize, imgsize, null);
-                /*Image au centre*/ drawable.drawImage(GetImage(map[j][i]), ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
+                drawable.drawImage(sol, ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
+                drawable.drawImage(GetImage(map[j][i],j,i), ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
             }
 
 
 	}
 
 
-    Image GetImage(int a){
+    Image GetImage(int a, int x, int y){
         switch(a){
-            case 35: return mur;
-            case 32: return sol;
-            case 46: return but;
-            case 36 : return caisse;
-            case 64 : return pousseur;
-            case 0: return mur;
+            case SOL: return sol;
+            case BUT: return but;
+            case CAISSE : return caisse;
+            case CAISSEONBUT : return caissesurbut;
+            case POUSSEUR : return pousseur;
+            //case POUSSEURONBUT : return but;
+            case MUR: case 0:
+                return GetMur(x,y);
             default :
                 Configuration.instance().logger().warning("Objet inconnue dans le niveau");
-                return pousseur;
+                return null;
         }
+    }
+
+    Image GetMur(int x, int y) {
+        int hash = 0;
+        if(IsMur(x-1,y))
+            hash +=1;
+        if(IsMur(x,y-1))
+            hash +=10;
+        if(IsMur(x,y+1))
+            hash +=100;
+        if(IsMur(x+1,y))
+            hash +=1000;
+
+        switch (hash){
+            case 0 : default : return mur;
+            case 1 : return murseulbas;
+            case 10 : return murseuldroit;
+            case 100 : return murseulgauche;
+            case 1000 : return murseulhaut;
+            case 11 : return murbasdroit;
+            case 101 : return murbasgauche;
+            case 1010 : return murhautdroit;
+            case 1100 : return murhautgauche;
+            case 111 : return murbas;
+            case 1101 : return murgauche;
+            case 1110 : return murhaut;
+            case 1011 : return murdroit;
+            case 1001 : return murhautbas;
+            case 110 : return murgauchedroit;
+            case 1111: return murplein;
+        }
+    }
+
+    Boolean IsMur(int x, int y){
+        if(x == -1 || y == -1 )
+            return true;
+        if(x > niveau.colonnes || y>niveau.lignes)
+            return true;
+        return niveau.mapGet()[x][y] == 35 || niveau.mapGet()[x][y] == 0;
     }
 
 }

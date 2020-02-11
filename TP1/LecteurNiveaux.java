@@ -88,8 +88,8 @@ public int[][] lisProchainNiveau(InputStream stream) throws IOException {
         System.out.println(N.nom);
 
         int [][] tab = N.mapGet();
-        for(int i=0;i<N.lignes();i++){
-            for(int j=0;j<N.colonnes();j++)
+        for(int i=0;i<N.lignes;i++){
+            for(int j=0;j<N.colonnes;j++)
                 System.out.print((char)tab[i][j]);
             System.out.print('\n');
         }

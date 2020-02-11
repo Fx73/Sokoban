@@ -1,5 +1,7 @@
 package TP1;
 
+import static Global.Tools.*;
+
 public class Niveau{
 
     String nom;
@@ -9,15 +11,28 @@ public class Niveau{
 
     public void fixeNom(String s){nom = s;}
 
-    void videCase(int i, int j){}
+    public void videCase(int i, int j){
+        map[j][i]=SOL;
+    }
 
-    void AjouteMur(int i ,int j){}
-    void AjoutePousseur(int i ,int j){}
-    void AjouteCaisse(int i ,int j){}
-    void AjouteBut(int i ,int j){}
-
-    public int lignes(){return lignes;}
-    public int colonnes(){return colonnes;}
+    public void AjouteMur(int i ,int j){
+        map[j][i]=MUR;
+    }
+    public void AjoutePousseur(int i ,int j){
+        map[j][i]=POUSSEUR;
+    }
+    public void AjouteCaisse(int i ,int j){
+        map[j][i]=CAISSE;
+    }
+    public void AjouteBut(int i ,int j){
+        map[j][i]=BUT;
+    }
+    public void AjouteCaisseonbut(int i ,int j){
+        map[j][i]=CAISSEONBUT;
+    }
+    public void AjoutePousseuronbut(int i ,int j){
+        map[j][i]=POUSSEURONBUT;
+    }
     public String nom(){return nom;}
 
     Boolean estVide(int l, int c){return true;}

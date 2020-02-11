@@ -2,6 +2,7 @@ package TP6;
 
 import javax.swing.*;
 import TP1.Niveau;
+import TP7.PlayerControler;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -42,6 +43,7 @@ public class InterfaceGraphique implements Runnable {
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addKeyListener(MyKeyListener);
+		frame.addKeyListener(new PlayerControler(niveaux[lvlno],frame).playerlistener);
 
 		// On fixe la taille et on demarre
 		frame.setSize(600, 600);

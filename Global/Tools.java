@@ -2,6 +2,14 @@ package Global;
 
 public class Tools{
 
+    public static final int MUR = 35;
+    public static final int SOL = 32;
+    public static final int BUT = 46;
+    public static final int CAISSE = 36;
+    public static final int POUSSEUR = 64;
+    public static final int CAISSEONBUT = 42;
+    public static final int POUSSEURONBUT = 43;
+
     public static void Print(String S){
         System.out.println(S);
     }
