@@ -9,6 +9,7 @@ import Structures.Iterateur;
 import Structures.Sequence;
 import TP1.*;
 import TP6.InterfaceGraphique;
+import TP7.GameManager;
 
 public class Sokoban{
 
@@ -16,11 +17,12 @@ public class Sokoban{
         Properties.Load();
         Niveau[] niveaux = new Niveau[100];
         new LecteurNiveaux().ChargerNiveaux("levels.txt", niveaux);
-        SwingUtilities.invokeLater(new InterfaceGraphique(niveaux));
+        GameManager.lvlno = (int)Configuration.Lis("NiveauCourant");
+        GameManager.niveaux = niveaux;
+        GameManager.interfacegraphique = new InterfaceGraphique();
+        SwingUtilities.invokeLater(GameManager.interfacegraphique);
 
     }
-
-
 
 
 

@@ -7,20 +7,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import static Global.Tools.*;
+import static TP7.GameManager.niveau;
 
 public class PlayerControler {
-    JFrame frame;
-    Niveau niveau;
+    int [][]map;
     int x,y;
     int xmov = 0;
     int ymov = 0;
 
-    public PlayerControler(Niveau n, JFrame jf){
-        niveau = n;
-        frame = jf;
-        for (int i = 0; i < n.lignes; i++)
-            for (int j = 0; j < n.colonnes; j++)
-                if(n.mapGet()[i][j] == 64){
+    public PlayerControler(){
+        map = niveau().mapGet();
+        for (int i = 0; i < niveau().lignes; i++)
+            for (int j = 0; j < niveau().colonnes; j++)
+                if(niveau().mapGet()[i][j] == 64){
                     y=i;
                     x=j;
                     return;
@@ -40,7 +39,7 @@ public class PlayerControler {
                 case KeyEvent.VK_RIGHT : MoveRight(); break;
             }
             Move();
-            frame.repaint();
+            GameManager.EndTurn();
         }
         @Override
         public void keyReleased(KeyEvent keyEvent) { }
@@ -48,12 +47,12 @@ public class PlayerControler {
 
 
     void Move(){
-        if(niveau.mapGet()[y+ymov][x+xmov] == MUR)
+        if(map[y+ymov][x+xmov] == MUR)
             return;
-        if(niveau.mapGet()[y+ymov][x+xmov] == CAISSE && (niveau.mapGet()[y + ymov * 2][x + xmov * 2] == MUR || niveau.mapGet()[y + ymov * 2][x + xmov * 2] == CAISSE))
+        if(map[y+ymov][x+xmov] == CAISSE && (map[y + ymov * 2][x + xmov * 2] == MUR || map[y + ymov * 2][x + xmov * 2] == CAISSE))
             return;
 
-        if(niveau.mapGet()[y + ymov][x + xmov] == CAISSE || niveau.mapGet()[y + ymov][x + xmov] == CAISSEONBUT){
+        if(map[y + ymov][x + xmov] == CAISSE || map[y + ymov][x + xmov] == CAISSEONBUT){
             CleanCaisseCase(x + xmov ,y + ymov);
             AjoutCaisseCase(x + xmov * 2,y + ymov  * 2);
         }
@@ -83,27 +82,27 @@ public class PlayerControler {
     }
 
     void CleanPlayerCase(){
-        if(niveau.mapGet()[y][x] == POUSSEURONBUT)
-            niveau.AjouteBut(x,y);
+        if(map[y][x] == POUSSEURONBUT)
+            niveau().AjouteBut(x,y);
         else
-            niveau.videCase(x,y);
+            niveau().videCase(x,y);
     }
     void AjoutPlayerCase(){
-        if(niveau.mapGet()[y][x] == BUT)
-            niveau.AjoutePousseuronbut(x,y);
+        if(map[y][x] == BUT)
+            niveau().AjoutePousseuronbut(x,y);
         else
-            niveau.AjoutePousseur(x,y);
+            niveau().AjoutePousseur(x,y);
     }
     void CleanCaisseCase(int x,int y){
-        if(niveau.mapGet()[y][x] == CAISSEONBUT)
-            niveau.AjouteBut(x,y);
+        if(map[y][x] == CAISSEONBUT)
+            niveau().AjouteBut(x,y);
         else
-            niveau.videCase(x,y);
+            niveau().videCase(x,y);
     }
     void AjoutCaisseCase(int x,int y){
-        if(niveau.mapGet()[y][x] == BUT)
-            niveau.AjouteCaisseonbut(x,y);
+        if(map[y][x] == BUT)
+            niveau().AjouteCaisseonbut(x,y);
         else
-            niveau.AjouteCaisse(x,y);
+            niveau().AjouteCaisse(x,y);
     }
 }

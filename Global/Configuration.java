@@ -24,13 +24,23 @@ public final class Configuration {
 
     private static String Sequence = "Liste";
     private static String LogLevel = "WARNING";
+    private static Boolean Maximized = false;
+    private static Integer NiveauCourant = 0;
 
-    public static Boolean Ecris(String S, String valeur) {
+    public static Boolean Ecris(String S, Object valeur) {
         Field[] fields = instance().getClass().getDeclaredFields();
         for(Field field : fields){
             if(S.equals(field.getName())){
                 try{field.set(instance,valeur);}
-                catch(Exception e){return false;}
+                catch(Exception e){
+                    try{field.set(instance,Boolean.parseBoolean(valeur.toString()));}
+                    catch(Exception e2){
+                        try{field.set(instance,Integer.parseInt(valeur.toString()));}
+                        catch(Exception e3){
+                            return false;
+                        }
+                    }
+                }
                 return true;
             }
         }

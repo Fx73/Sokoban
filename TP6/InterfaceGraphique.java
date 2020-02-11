@@ -1,20 +1,22 @@
 package TP6;
 
 import javax.swing.*;
+
+import Global.Configuration;
 import TP1.Niveau;
 import TP7.PlayerControler;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+
+import static TP7.GameManager.*;
 
 // L'interface runnable déclare une méthode run
 public class InterfaceGraphique implements Runnable {
-	public static InterfaceGraphique instance;
-	Niveau[] niveaux;
-	Integer lvlno = 0;
-	Boolean maximized = false;
 	JFrame frame;
+
 	KeyListener MyKeyListener=new KeyListener(){
 				@Override
 				public void keyTyped(KeyEvent keyEvent) { }
@@ -23,15 +25,14 @@ public class InterfaceGraphique implements Runnable {
 				public void keyPressed(KeyEvent keyEvent) {
 					if (keyEvent.getKeyCode() == KeyEvent.VK_F12)
 						toggleFullScreen();
+					if (keyEvent.getKeyCode() == KeyEvent.VK_Q) {
+							Exit();
+					}
+
 				}
 				@Override
 				public void keyReleased(KeyEvent keyEvent) { }
 			};
-
-
-	public InterfaceGraphique(Niveau[] n){
-		niveaux = n;
-	}
 
 	public void run() {
 		// Creation d'une fenetre
@@ -43,22 +44,31 @@ public class InterfaceGraphique implements Runnable {
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addKeyListener(MyKeyListener);
-		frame.addKeyListener(new PlayerControler(niveaux[lvlno],frame).playerlistener);
+		frame.addKeyListener(new PlayerControler().playerlistener);
 
 		// On fixe la taille et on demarre
 		frame.setSize(600, 600);
 		frame.setVisible(true);
+
+		if((Boolean) Configuration.Lis("Maximized"))
+			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+
 	}
 
+	public void Refresh(){
+		frame.repaint();
+	}
+	public void RemoveFrame(){
+		frame.dispose();
+	}
 	public void toggleFullScreen(){
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		if(maximized){
+		if((Boolean) Configuration.Lis("Maximized")){
 			device.setFullScreenWindow(null);
-			maximized = false;
+			Configuration.Ecris("Maximized",false);
 		} else {
 			device.setFullScreenWindow(frame);
-			maximized = true;
+			Configuration.Ecris("Maximized",true);
 		}
 	}
-
 }

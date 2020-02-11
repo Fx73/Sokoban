@@ -33,7 +33,12 @@ public class Properties {
         out_stream.write("# Choix de l'implémentation des sequences\n");
         out_stream.write("# Valeurs utiles : Liste ou Tableau\n");
         out_stream.write("Sequence="+ Configuration.Lis("Sequence").toString() +"\n");
+        out_stream.write("# Choix du niveau des warnings\n");
         out_stream.write("LogLevel="+ Configuration.Lis("LogLevel").toString() +"\n");
+        out_stream.write("# Choix du plein ecran\n");
+        out_stream.write("Maximized="+ Configuration.Lis("Maximized").toString() +"\n");
+        out_stream.write("# Niveau en cours\n");
+        out_stream.write("NiveauCourant="+ Configuration.Lis("NiveauCourant").toString() +"\n");
 
         out_stream.close();
     }
