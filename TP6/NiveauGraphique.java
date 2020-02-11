@@ -103,8 +103,9 @@ class NiveauGraphique extends JComponent {
             for(int j = 0; j< niveau.colonnes;j++){
                 drawable.drawImage(sol, ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
                 drawable.drawImage(GetImage(map[j][i],j,i), ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
-            }
+                if(map[j][i] == POUSSEURONBUT) drawable.drawImage(pousseur, ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
 
+            }
 
 	}
 
@@ -112,11 +113,10 @@ class NiveauGraphique extends JComponent {
     Image GetImage(int a, int x, int y){
         switch(a){
             case SOL: return sol;
-            case BUT: return but;
+            case BUT: case POUSSEURONBUT : return but;
             case CAISSE : return caisse;
             case CAISSEONBUT : return caissesurbut;
             case POUSSEUR : return pousseur;
-            //case POUSSEURONBUT : return but;
             case MUR: case 0:
                 return GetMur(x,y);
             default :
