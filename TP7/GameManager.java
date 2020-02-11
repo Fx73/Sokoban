@@ -7,6 +7,8 @@ import TP6.InterfaceGraphique;
 
 import javax.swing.*;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 import static Global.Tools.*;
@@ -15,6 +17,27 @@ public class GameManager {
     public static 	Niveau[] niveaux;
     public static Integer lvlno = 0;
     public static InterfaceGraphique interfacegraphique;
+
+    public static KeyListener GameKeyListener=new KeyListener(){
+        @Override
+        public void keyTyped(KeyEvent keyEvent) { }
+
+        @Override
+        public void keyPressed(KeyEvent keyEvent) {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_F12 || keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE)
+                interfacegraphique.toggleFullScreen();
+            if (keyEvent.getKeyCode() == KeyEvent.VK_R) {
+                ResetLevel();
+            }
+            if (keyEvent.getKeyCode() == KeyEvent.VK_Q || keyEvent.getKeyCode() == KeyEvent.VK_A) {
+                Exit();
+            }
+
+        }
+        @Override
+        public void keyReleased(KeyEvent keyEvent) { }
+    };
+
 
     static void EndTurn(){
         RefreshScreen();
@@ -38,6 +61,10 @@ public class GameManager {
 
     static  public Niveau niveau(){
         return niveaux[lvlno];
+    }
+
+    static public void ResetLevel(){
+
     }
 
     public static void Exit() {

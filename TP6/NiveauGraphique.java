@@ -99,11 +99,13 @@ class NiveauGraphique extends JComponent {
 
 		// On affiche
         int[][]map = niveau.mapGet();
-        for(int i = 0; i< niveau.lignes;i++)
-            for(int j = 0; j< niveau.colonnes;j++){
-                drawable.drawImage(sol, ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
-                drawable.drawImage(GetImage(map[j][i],j,i), ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
-                if(map[j][i] == POUSSEURONBUT) drawable.drawImage(pousseur, ((center.x - niveau.lignes * (imgsize/2)) + i * imgsize), ((center.y - niveau.colonnes * (imgsize/2)) + j * imgsize), imgsize, imgsize, null);
+        for(int i = 0; i< niveau.colonnes;i++)
+            for(int j = 0; j< niveau.lignes;j++){
+                int xplace = ((center.x - niveau.colonnes * (imgsize/2)) + i * imgsize);
+                int yplace = ((center.y - niveau.lignes * (imgsize/2)) + j * imgsize);
+                drawable.drawImage(sol, xplace, yplace, imgsize, imgsize, null);
+                drawable.drawImage(GetImage(map[j][i],j,i), xplace, yplace, imgsize, imgsize, null);
+                if(map[j][i] == POUSSEURONBUT) drawable.drawImage(pousseur, xplace,yplace, imgsize, imgsize, null);
 
             }
 

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import Global.Configuration;
 import TP1.Niveau;
+import TP7.GameManager;
 import TP7.PlayerControler;
 
 import java.awt.*;
@@ -17,22 +18,7 @@ import static TP7.GameManager.*;
 public class InterfaceGraphique implements Runnable {
 	JFrame frame;
 
-	KeyListener MyKeyListener=new KeyListener(){
-				@Override
-				public void keyTyped(KeyEvent keyEvent) { }
 
-				@Override
-				public void keyPressed(KeyEvent keyEvent) {
-					if (keyEvent.getKeyCode() == KeyEvent.VK_F12)
-						toggleFullScreen();
-					if (keyEvent.getKeyCode() == KeyEvent.VK_Q) {
-							Exit();
-					}
-
-				}
-				@Override
-				public void keyReleased(KeyEvent keyEvent) { }
-			};
 
 	public void run() {
 		// Creation d'une fenetre
@@ -43,7 +29,7 @@ public class InterfaceGraphique implements Runnable {
 
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.addKeyListener(MyKeyListener);
+		frame.addKeyListener(GameKeyListener);
 		frame.addKeyListener(new PlayerControler().playerlistener);
 
 		// On fixe la taille et on demarre
