@@ -1,12 +1,24 @@
 package TP1;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import Global.Configuration;
+
+import java.io.*;
 
 public class RedacteurNiveau{
+        OutputStream stream;
+    public RedacteurNiveau(String filepath) {
+        File out = new File(filepath);
+        try {
+            out.createNewFile();
+            stream = new FileOutputStream(out);
+        }
+        catch(Exception e){
+            Configuration.logger().severe("Erreur de creation d'un fichier de sortie " + filepath);
+        }
 
-    public void ecrisNiveau(OutputStream stream, Niveau N) throws IOException{
+    }
 
+    public void ecrisNiveau(Niveau N) throws IOException{
     int [][] tab = N.mapGet();
     for(int i=0;i<N.lignes;i++){
         for(int j=0;j<N.colonnes;j++)
@@ -15,6 +27,8 @@ public class RedacteurNiveau{
     }
     stream.write(';');
     stream.write( N.nom.getBytes());
+    stream.flush();
+    stream.close();
  }
 
 

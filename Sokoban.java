@@ -20,8 +20,7 @@ public class Sokoban{
         GameManager.lvlno = (int)Configuration.Lis("NiveauCourant");
         GameManager.niveaux = niveaux;
         GameManager.interfacegraphique = new InterfaceGraphique();
-        SwingUtilities.invokeLater(GameManager.interfacegraphique);
-
+        GameManager.StartLevel();
     }
 
 

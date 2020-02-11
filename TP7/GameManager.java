@@ -2,7 +2,9 @@ package TP7;
 
 import Global.Configuration;
 import Global.Properties;
+import TP1.LecteurNiveaux;
 import TP1.Niveau;
+import TP1.RedacteurNiveau;
 import TP6.InterfaceGraphique;
 
 import javax.swing.*;
@@ -10,6 +12,7 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static Global.Tools.*;
 
@@ -38,6 +41,7 @@ public class GameManager {
         public void keyReleased(KeyEvent keyEvent) { }
     };
 
+    private static Niveau copieniveau;
 
     static void EndTurn(){
         RefreshScreen();
@@ -52,6 +56,12 @@ public class GameManager {
     }
 
     static public void StartLevel(){
+        try {
+            new RedacteurNiveau("resources/level.save").ecrisNiveau(niveaux[lvlno]);
+        }
+        catch (Exception e){
+            Configuration.logger().severe("Erreur d'ecriture dans le ficher de sauvegarde");
+        }
         SwingUtilities.invokeLater(interfacegraphique);
     }
 
@@ -64,7 +74,14 @@ public class GameManager {
     }
 
     static public void ResetLevel(){
-
+        InputStream in_stream = ClassLoader.getSystemClassLoader().getResourceAsStream("level.save");
+        try {
+            niveaux[lvlno].mapSet(new LecteurNiveaux().lisProchainNiveau(in_stream));
+        }
+        catch (Exception e){
+            Configuration.logger().severe("Erreur de lecture du fichier de sauvegarde");
+        }
+        RefreshScreen();
     }
 
     public static void Exit() {

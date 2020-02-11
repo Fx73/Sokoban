@@ -119,12 +119,9 @@ public class MainClass{
 
     public static void main1(String [] args) throws FileNotFoundException,IOException {
         Niveau[] niveaux = new Niveau[100];
-        File out = new File("lvlout.txt");
-        out.createNewFile();
         InputStream in_stream = LecteurNiveaux.class.getResourceAsStream("/levels.txt");
-        OutputStream out_stream = new FileOutputStream(out);
         LecteurNiveaux lecteur = new LecteurNiveaux();
-        RedacteurNiveau redacteur = new RedacteurNiveau();
+        RedacteurNiveau redacteur = new RedacteurNiveau("lvlout.txt");
         int i =0;
 
         int[][] niv = lecteur.lisProchainNiveau(in_stream);
@@ -145,8 +142,7 @@ public class MainClass{
             lecteur.printNiveau( niveaux[i]);
         }
 
-        redacteur.ecrisNiveau(out_stream, niveaux[0]);
-        out_stream.flush();
+        redacteur.ecrisNiveau(niveaux[0]);
     }
 
 
