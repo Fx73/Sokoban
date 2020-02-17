@@ -1,24 +1,31 @@
 package TP7;
 
+import Global.Deplacement;
 import Global.Tools;
 import TP1.Niveau;
 import javafx.scene.input.KeyCode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import TP6.NiveauGraphique;
 
 import static Global.Tools.*;
-import static TP7.GameManager.niveau;
+import static TP7.GameManager.*;
+import static java.lang.Math.abs;
 
 public class PlayerControler {
     int [][]map;
+    public Point coord = new Point ();
+
     int x,y;
-    int xr,yr;
     int xmov = 0;
     int ymov = 0;
 
@@ -49,40 +56,43 @@ public class PlayerControler {
     };
 
     public MouseListener playermlistener = new MouseListener(){
-
-
+        ScheduledExecutorService executorService;
+        int[] dep;
+        int ii;
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
-            int xclic = (mouseEvent.getX() - GameManager.interfacegraphique.niveaugraphique.posun.x) /GameManager.interfacegraphique.niveaugraphique.imgsize;
-            int yclic = (mouseEvent.getY() - GameManager.interfacegraphique.niveaugraphique.posun.y) /GameManager.interfacegraphique.niveaugraphique.imgsize;
-            System.out.println("MouseEvent " + mouseEvent.getX() + " " + mouseEvent.getY());
-            System.out.println("Posun " + GameManager.interfacegraphique.niveaugraphique.posun.x + " " + GameManager.interfacegraphique.niveaugraphique.posun.y);
-            Tools.Print(xclic);
-            Tools.Print(yclic);
-
+            Point arrivee  = GetPointInGrid(mouseEvent.getPoint());
+            System.out.println(arrivee);
+            dep = Deplacement.Djikstra(new Point(x,y),arrivee);
+            if (dep == null) return;
+            ii = 0;
+            if(!executorService.isShutdown())executorService.shutdownNow();
+            executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleAtFixedRate(this::AutoMove, 0, 100, TimeUnit.MILLISECONDS);
         }
+        private void AutoMove() {
+            System.out.println("you");
+            switch (dep[ii]){
+                case 0: MoveUp();break;
+                case 1: MoveDown();break;
+                case 2: MoveLeft();break;
+                case 3: MoveRight();break;
+            }
+            Move();
+            RefreshScreen();
 
+            ii ++;
+            if (ii>= dep.length)executorService.shutdownNow();
+        }
         @Override
-        public void mousePressed(MouseEvent mouseEvent) {
-
-        }
-
+        public void mousePressed(MouseEvent mouseEvent) { }
         @Override
-        public void mouseReleased(MouseEvent mouseEvent) {
-
-        }
-
+        public void mouseReleased(MouseEvent mouseEvent) { }
         @Override
-        public void mouseEntered(MouseEvent mouseEvent) {
-
-        }
-
+        public void mouseEntered(MouseEvent mouseEvent) { }
         @Override
-        public void mouseExited(MouseEvent mouseEvent) {
-
-        }
+        public void mouseExited(MouseEvent mouseEvent) { }
     };
-
 
 
     void Move(){
@@ -154,5 +164,13 @@ public class PlayerControler {
                     x=j;
                     return;
                 }
+    }
+
+    public static Point GetPointInGrid(Point coord){
+        int imgsize = interfacegraphique.ImgSize();
+        Point zero = new Point(interfacegraphique.GetSize().width/2 - niveau().colonnes * (imgsize/2) +(imgsize/2) , interfacegraphique.GetSize().height/2 - niveau().lignes * (imgsize/2) + imgsize);
+        int xc = (coord.x - zero.x)/imgsize;
+        int yc = (coord.y - zero.y)/imgsize;
+        return new Point(xc,yc);
     }
 }

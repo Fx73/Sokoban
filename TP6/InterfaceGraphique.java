@@ -3,22 +3,21 @@ package TP6;
 import javax.swing.*;
 import java.awt.*;
 import Global.Configuration;
+import TP7.GameManager;
 
 import static TP7.GameManager.*;
+import static java.lang.Integer.min;
 
 // L'interface runnable déclare une méthode run
 public class InterfaceGraphique implements Runnable {
 	JFrame frame;
-	public NiveauGraphique niveaugraphique;
-
 
 	public void run() {
 		// Creation d'une fenetre
 		frame = new JFrame("Sokoban : Niveau " + lvlno.toString() + " : " + niveaux[lvlno].nom() );
 
 		// Ajout de notre composant de dessin dans la fenetre
-		niveaugraphique = new NiveauGraphique();
-		frame.add(niveaugraphique);
+		frame.add(new NiveauGraphique());
 
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +40,10 @@ public class InterfaceGraphique implements Runnable {
 	public void RemoveFrame(){
 		frame.dispose();
 	}
+
+	public Dimension GetSize(){return frame.getContentPane().getSize();}
+	public int ImgSize(){return min(frame.getWidth() / GameManager.niveau().colonnes ,frame.getHeight() / GameManager.niveau().lignes);}
+
 	public void toggleFullScreen(){
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		if((Boolean) Configuration.Lis("Maximized")){

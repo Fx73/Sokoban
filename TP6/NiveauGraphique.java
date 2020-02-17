@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 
 import Global.Configuration;
+import Global.Tools;
 import TP1.Niveau;
 import TP7.GameManager;
 
@@ -40,8 +41,6 @@ public class NiveauGraphique extends JComponent {
     
     Niveau niveau;
     public int imgsize;
-    public Point posun = new Point();
-
 
     public NiveauGraphique(){
 
@@ -100,9 +99,6 @@ public class NiveauGraphique extends JComponent {
 		//Calcul de la taille d'un objet
         imgsize = min(width / niveau.colonnes ,height / niveau.lignes);
 
-        posun.x = ((center.x - niveau.colonnes * (imgsize/2)) * imgsize);
-        posun.y = ((center.y - niveau.lignes * (imgsize/2)) * imgsize);
-
         // On affiche
         int[][]map = niveau.mapGet();
         for(int i = 0; i< niveau.colonnes;i++)
@@ -112,9 +108,7 @@ public class NiveauGraphique extends JComponent {
                 drawable.drawImage(sol, xplace, yplace, imgsize, imgsize, null);
                 drawable.drawImage(GetImage(map[j][i],j,i), xplace, yplace, imgsize, imgsize, null);
                 if(map[j][i] == POUSSEURONBUT) drawable.drawImage(pousseur, xplace,yplace, imgsize, imgsize, null);
-
             }
-
 	}
 
 
