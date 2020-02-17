@@ -5,12 +5,13 @@ import javax.imageio.ImageIO;
 
 import Global.Configuration;
 import TP1.Niveau;
+import TP7.GameManager;
 
 import static Global.Tools.*;
 import static java.lang.Integer.min;
 
 
-class NiveauGraphique extends JComponent {
+public class NiveauGraphique extends JComponent {
 
     Image but;
     Image caisse;
@@ -38,8 +39,11 @@ class NiveauGraphique extends JComponent {
 
     
     Niveau niveau;
+    public int imgsize;
+    public Point posun = new Point();
 
-    public NiveauGraphique(Niveau n){
+
+    public NiveauGraphique(){
 
 		try {
             but = ImageIO.read( Configuration.charge("Images/But.png"));
@@ -71,11 +75,10 @@ class NiveauGraphique extends JComponent {
 			Configuration.instance().logger().severe("Impossible de charger l'image");
 			System.exit(1);
         }
-        
-        niveau = n;
     }
 
     public void paintComponent(Graphics g) {
+        niveau = GameManager.niveau();
 		System.out.println("Entree dans paintComponent : map ("+niveau.lignes+"x"+niveau.colonnes+")");
 
 		// Graphics 2D est le vrai type de l'objet passé en paramètre
@@ -95,9 +98,12 @@ class NiveauGraphique extends JComponent {
 		drawable.setPaint(Color.black);
 
 		//Calcul de la taille d'un objet
-        int imgsize = min(width / niveau.lignes ,height / niveau.colonnes);
+        imgsize = min(width / niveau.colonnes ,height / niveau.lignes);
 
-		// On affiche
+        posun.x = ((center.x - niveau.colonnes * (imgsize/2)) * imgsize);
+        posun.y = ((center.y - niveau.lignes * (imgsize/2)) * imgsize);
+
+        // On affiche
         int[][]map = niveau.mapGet();
         for(int i = 0; i< niveau.colonnes;i++)
             for(int j = 0; j< niveau.lignes;j++){

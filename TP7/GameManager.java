@@ -17,9 +17,10 @@ import java.io.InputStream;
 import static Global.Tools.*;
 
 public class GameManager {
-    public static 	Niveau[] niveaux;
+    public static Niveau[] niveaux;
     public static Integer lvlno = 0;
     public static InterfaceGraphique interfacegraphique;
+    public static PlayerControler playercontroller;
 
     public static KeyListener GameKeyListener=new KeyListener(){
         @Override
@@ -50,7 +51,10 @@ public class GameManager {
                 if(niveaux[lvlno].mapGet()[i][j] == CAISSE || niveaux[lvlno].mapGet()[i][j] == BUT)
                     return;
 
-        lvlno ++;
+        if (lvlno < niveaux.length)
+            lvlno ++;
+        else
+            Exit();
         interfacegraphique.RemoveFrame();
         StartLevel();
     }
@@ -76,11 +80,15 @@ public class GameManager {
     static public void ResetLevel(){
         InputStream in_stream = ClassLoader.getSystemClassLoader().getResourceAsStream("level.save");
         try {
-            niveaux[lvlno].mapSet(new LecteurNiveaux().lisProchainNiveau(in_stream));
+            int [][] map = new LecteurNiveaux().lisProchainNiveau(in_stream);
+            LecteurNiveaux.printNiveau(niveaux[lvlno]);
+            niveaux[lvlno].mapSet(map);
+            LecteurNiveaux.printNiveau(niveaux[lvlno]);
         }
         catch (Exception e){
             Configuration.logger().severe("Erreur de lecture du fichier de sauvegarde");
         }
+        playercontroller.ResetController();
         RefreshScreen();
     }
 

@@ -27,6 +27,8 @@ public class RedacteurNiveau{
     }
     stream.write(';');
     stream.write( N.nom.getBytes());
+    stream.write('\n');
+    stream.write('\n');
     stream.flush();
     stream.close();
  }

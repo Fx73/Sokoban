@@ -74,7 +74,7 @@ public int[][] lisProchainNiveau(InputStream stream) throws IOException {
         String S = "";
         byte[] data = new byte [1];
         stream.read(data);
-        while(data[0] != '\n' && data[0] != 0){
+        while(data[0] != '\n' && data[0] != '\r' && data[0] != 0){
             S += (char)data[0];
             stream.read(data);
         }
@@ -84,7 +84,7 @@ public int[][] lisProchainNiveau(InputStream stream) throws IOException {
         return a>b?a:b;
     }
 
-    public void printNiveau(Niveau N){
+    public static void printNiveau(Niveau N){
         System.out.println(N.nom);
 
         int [][] tab = N.mapGet();

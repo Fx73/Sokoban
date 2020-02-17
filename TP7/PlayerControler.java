@@ -1,10 +1,16 @@
 package TP7;
 
+import Global.Tools;
 import TP1.Niveau;
+import javafx.scene.input.KeyCode;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import TP6.NiveauGraphique;
 
 import static Global.Tools.*;
 import static TP7.GameManager.niveau;
@@ -12,18 +18,12 @@ import static TP7.GameManager.niveau;
 public class PlayerControler {
     int [][]map;
     int x,y;
+    int xr,yr;
     int xmov = 0;
     int ymov = 0;
 
     public PlayerControler(){
-        map = niveau().mapGet();
-        for (int i = 0; i < niveau().lignes; i++)
-            for (int j = 0; j < niveau().colonnes; j++)
-                if(niveau().mapGet()[i][j] == 64){
-                    y=i;
-                    x=j;
-                    return;
-                }
+        ResetController();
     }
 
     public KeyListener playerlistener = new KeyListener(){
@@ -32,18 +32,57 @@ public class PlayerControler {
 
         @Override
         public void keyPressed(KeyEvent keyEvent) {
-            switch (keyEvent.getKeyCode()){
+            int kc = keyEvent.getKeyCode();
+            switch (kc){
                 case KeyEvent.VK_UP : MoveUp(); break;
                 case KeyEvent.VK_DOWN : MoveDown(); break;
                 case KeyEvent.VK_LEFT: MoveLeft(); break;
                 case KeyEvent.VK_RIGHT : MoveRight(); break;
             }
-            Move();
-            GameManager.EndTurn();
+            if(kc == KeyEvent.VK_UP || kc == KeyEvent.VK_DOWN || kc == KeyEvent.VK_LEFT || kc == KeyEvent.VK_RIGHT ) {
+                Move();
+                GameManager.EndTurn();
+            }
         }
         @Override
         public void keyReleased(KeyEvent keyEvent) { }
     };
+
+    public MouseListener playermlistener = new MouseListener(){
+
+
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            int xclic = (mouseEvent.getX() - GameManager.interfacegraphique.niveaugraphique.posun.x) /GameManager.interfacegraphique.niveaugraphique.imgsize;
+            int yclic = (mouseEvent.getY() - GameManager.interfacegraphique.niveaugraphique.posun.y) /GameManager.interfacegraphique.niveaugraphique.imgsize;
+            System.out.println("MouseEvent " + mouseEvent.getX() + " " + mouseEvent.getY());
+            System.out.println("Posun " + GameManager.interfacegraphique.niveaugraphique.posun.x + " " + GameManager.interfacegraphique.niveaugraphique.posun.y);
+            Tools.Print(xclic);
+            Tools.Print(yclic);
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent mouseEvent) {
+
+        }
+    };
+
 
 
     void Move(){
@@ -104,5 +143,16 @@ public class PlayerControler {
             niveau().AjouteCaisseonbut(x,y);
         else
             niveau().AjouteCaisse(x,y);
+    }
+
+    public void ResetController(){
+        map = niveau().mapGet();
+        for (int i = 0; i < niveau().lignes; i++)
+            for (int j = 0; j < niveau().colonnes; j++)
+                if(niveau().mapGet()[i][j] == 64){
+                    y=i;
+                    x=j;
+                    return;
+                }
     }
 }

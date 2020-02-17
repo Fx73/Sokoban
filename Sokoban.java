@@ -10,6 +10,7 @@ import Structures.Sequence;
 import TP1.*;
 import TP6.InterfaceGraphique;
 import TP7.GameManager;
+import TP7.PlayerControler;
 
 public class Sokoban{
 
@@ -20,6 +21,7 @@ public class Sokoban{
         GameManager.lvlno = (int)Configuration.Lis("NiveauCourant");
         GameManager.niveaux = niveaux;
         GameManager.interfacegraphique = new InterfaceGraphique();
+        GameManager.playercontroller = new PlayerControler();
         GameManager.StartLevel();
     }
 
