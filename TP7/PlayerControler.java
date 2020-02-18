@@ -56,33 +56,47 @@ public class PlayerControler {
     };
 
     public MouseListener playermlistener = new MouseListener(){
-        ScheduledExecutorService executorService;
-        int[] dep;
-        int ii;
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        Deplacement.deplist depl;
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             Point arrivee  = GetPointInGrid(mouseEvent.getPoint());
             System.out.println(arrivee);
-            dep = Deplacement.Djikstra(new Point(x,y),arrivee);
-            if (dep == null) return;
-            ii = 0;
+
+            if((abs(arrivee.x -x) == 1 && arrivee.y - y == 0 ) || (abs(arrivee.y -y) == 1 && arrivee.x - x == 0 )) {
+                if (arrivee.x - x == 0)
+                    if (arrivee.y - y > 0)
+                        MoveDown();
+                    else
+                        MoveUp();
+                else if (arrivee.x - x > 0)
+                        MoveRight();
+                    else
+                        MoveLeft();
+                Move();
+                RefreshScreen();
+                GameManager.EndTurn();
+                return;
+            }
+
+            depl = Deplacement.Djikstra(new Point(x,y),arrivee);
+            if (depl == null) return;
+
             if(!executorService.isShutdown())executorService.shutdownNow();
             executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(this::AutoMove, 0, 100, TimeUnit.MILLISECONDS);
         }
         private void AutoMove() {
-            System.out.println("you");
-            switch (dep[ii]){
+            switch (depl.dep){
                 case 0: MoveUp();break;
                 case 1: MoveDown();break;
                 case 2: MoveLeft();break;
                 case 3: MoveRight();break;
+                case -1:executorService.shutdownNow();return;
             }
             Move();
             RefreshScreen();
-
-            ii ++;
-            if (ii>= dep.length)executorService.shutdownNow();
+            depl = depl.next;
         }
         @Override
         public void mousePressed(MouseEvent mouseEvent) { }
