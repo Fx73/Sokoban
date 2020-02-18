@@ -1,13 +1,12 @@
-package Global;
+package Controller;
 
-import TP7.GameManager;
+import Modele.GameManager;
 
 import java.awt.*;
-import java.util.Arrays;
 
 import static Global.Tools.CAISSE;
 import static Global.Tools.MUR;
-import static TP7.GameManager.niveau;
+import static Modele.GameManager.niveau;
 
 public class Deplacement {
     static Point arrivee;

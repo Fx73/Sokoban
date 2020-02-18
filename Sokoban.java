@@ -2,15 +2,10 @@ import java.io.*;
 import javax.swing.*;
 
 
-import Global.Configuration;
-import Global.Tools;
-import Global.Properties;
-import Structures.Iterateur;
-import Structures.Sequence;
-import TP1.*;
-import TP6.InterfaceGraphique;
-import TP7.GameManager;
-import TP7.PlayerControler;
+import Global.*;
+import Structures.*;
+import Modele.*;
+
 
 public class Sokoban{
 
@@ -18,10 +13,7 @@ public class Sokoban{
         Properties.Load();
         Niveau[] niveaux = new Niveau[100];
         new LecteurNiveaux().ChargerNiveaux("levels.txt", niveaux);
-        GameManager.lvlno = (int)Configuration.Lis("NiveauCourant");
-        GameManager.niveaux = niveaux;
-        GameManager.interfacegraphique = new InterfaceGraphique();
-        GameManager.playercontroller = new PlayerControler();
+        GameManager.InstanceGame(niveaux);
         GameManager.StartLevel();
     }
 

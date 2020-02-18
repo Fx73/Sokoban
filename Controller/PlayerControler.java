@@ -1,6 +1,6 @@
-package TP7;
+package Controller;
 
-import Controller.Deplacement;
+import Modele.GameManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static Global.Tools.*;
-import static TP7.GameManager.*;
+import static Modele.GameManager.*;
 import static java.lang.Math.abs;
 
 public class PlayerControler {
