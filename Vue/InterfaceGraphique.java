@@ -18,7 +18,7 @@ public class InterfaceGraphique implements Runnable {
 		frame = new JFrame("Sokoban : Niveau " + lvlno.toString() + " : " + niveaux[lvlno].nom() );
 
 		// Ajout de notre composant de dessin dans la fenetre
-		frame.add(new NiveauGraphique());
+		frame.add(new NiveauGraphiqueAnime());
 
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

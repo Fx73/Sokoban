@@ -1,20 +1,21 @@
 package Vue;
 
-import Global.*;
 import Modele.GameManager;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
-import static Global.Tools.*;
+import static Global.Tools.POUSSEUR;
+import static Global.Tools.POUSSEURONBUT;
 import static java.lang.Integer.min;
 
 
-public class NiveauGraphique extends JComponent {
+public class NiveauGraphiqueAnime extends JComponent {
     ImageBank ibank;
-    public NiveauGraphique(){
+    Animation animationpousseur;
+    public NiveauGraphiqueAnime(){
         ibank = new ImageBank();
+        animationpousseur = new AnimationPousseur(ibank);
     }
 
     public void paintComponent(Graphics g) {
@@ -45,7 +46,7 @@ public class NiveauGraphique extends JComponent {
                 int yplace = ((center.y - GameManager.niveau().lignes * (imgsize/2)) + j * imgsize);
                 drawable.drawImage(ibank.sol, xplace, yplace, imgsize, imgsize, null);
                 drawable.drawImage(ibank.GetImage(map[j][i],j,i), xplace, yplace, imgsize, imgsize, null);
-                if(map[j][i] == POUSSEURONBUT) drawable.drawImage(ibank.pousseuridle[0], xplace,yplace, imgsize, imgsize, null);
+                if(map[j][i] == POUSSEURONBUT || map[j][i] == POUSSEUR) drawable.drawImage(animationpousseur.GetImage(), xplace,yplace, imgsize, imgsize, null);
             }
 	}
 

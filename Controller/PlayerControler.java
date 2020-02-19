@@ -19,6 +19,7 @@ import static java.lang.Math.abs;
 public class PlayerControler {
     int [][]map;
     int x,y;
+    public Coup.Dir lastdir = BAS;
 
     public PlayerControler(){
         ResetController();

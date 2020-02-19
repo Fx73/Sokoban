@@ -31,6 +31,7 @@ public class Coup extends Commande {
         Point direction = DirToPoint(dir);
         if(pousse) GameManager.playercontroller.MoveCaisse(direction);
         GameManager.playercontroller.Move(direction);
+        GameManager.playercontroller.lastdir = dir;
         GameManager.RefreshScreen();
         GameManager.EndTurn();
     }
