@@ -2,6 +2,8 @@ package Controller;
 
 import Modele.GameManager;
 
+import java.awt.*;
+
 public class Coup {
     public static enum Dir {
         HAUT,
@@ -12,34 +14,31 @@ public class Coup {
     }
 
     Dir dir;
+    boolean pousse = false;
     Coup next;
 
-    public Coup(Dir _dir) {
+    public Coup(Dir _dir,boolean _pousse) {
         dir = _dir;
+        pousse = _pousse;
         next = null;
     }
-
-    public Coup(Dir _dir, Coup _next) {
+    public Coup(Dir _dir, boolean _pousse, Coup _next) {
         dir = _dir;
+        pousse = _pousse;
         next = _next;
     }
-
     public void Execute() {
-        switch (dir) {
-            case HAUT:
-                GameManager.playercontroller.MoveUp();
-                break;
-            case BAS:
-                GameManager.playercontroller.MoveDown();
-                break;
-            case GAUCHE:
-                GameManager.playercontroller.MoveLeft();
-                break;
-            case DROITE:
-                GameManager.playercontroller.MoveRight();
-                break;
-        }
-        GameManager.playercontroller.Move();
+        Point direction = DirToPoint(dir);
+        if(pousse) GameManager.playercontroller.MoveCaisse(direction);
+        GameManager.playercontroller.Move(direction);
+        GameManager.RefreshScreen();
+        GameManager.EndTurn();
+    }
+
+    public void Dexecute(){
+        Point direction = DirToPoint(dir);
+        GameManager.playercontroller.Demove(direction);
+        if(pousse) GameManager.playercontroller.DemoveCaisse(direction);
         GameManager.RefreshScreen();
         GameManager.EndTurn();
     }
@@ -62,4 +61,16 @@ public class Coup {
         }
         return Dir.RIEN;
     }
+
+    public static Point DirToPoint(Dir d){
+        int x = 0,y = 0;
+        switch (d){
+            case HAUT:y--;break;
+            case BAS: y++;break;
+            case GAUCHE: x --;break;
+            case DROITE: x ++;break;
+        }
+        return new Point(x,y);
+    }
+
 }

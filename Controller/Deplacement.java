@@ -26,7 +26,7 @@ public class Deplacement {
 
     static Coup Djik_rec(Point p, boolean [][] parcours){
         if(p.equals(arrivee))
-            return new Coup(RIEN,null);
+            return new Coup(RIEN,false,null);
 
         parcours[p.y][p.x] = true;
 
@@ -49,7 +49,7 @@ public class Deplacement {
         if(min == RIEN)
             return null;
 
-        return new Coup(min,dir[Coup.DirToInt(min)]);
+        return new Coup(min,false,dir[Coup.DirToInt(min)]);
     }
 
     static private int Poid(Coup c){

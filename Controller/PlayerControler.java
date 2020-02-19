@@ -19,8 +19,6 @@ import static java.lang.Math.abs;
 public class PlayerControler {
     int [][]map;
     int x,y;
-    int xmov = 0;
-    int ymov = 0;
 
     public PlayerControler(){
         ResetController();
@@ -34,13 +32,13 @@ public class PlayerControler {
         public void keyPressed(KeyEvent keyEvent) {
             Coup coup = null;
             switch (keyEvent.getKeyCode()){
-                case KeyEvent.VK_UP : coup = new Coup(HAUT); break;
-                case KeyEvent.VK_DOWN : coup = new Coup(BAS); break;
-                case KeyEvent.VK_LEFT: coup = new Coup(GAUCHE); break;
-                case KeyEvent.VK_RIGHT : coup = new Coup(DROITE); break;
+                case KeyEvent.VK_UP : coup = CreateCoup(HAUT); break;
+                case KeyEvent.VK_DOWN : coup = CreateCoup(BAS); break;
+                case KeyEvent.VK_LEFT: coup = CreateCoup(GAUCHE); break;
+                case KeyEvent.VK_RIGHT : coup = CreateCoup(DROITE); break;
             }
             if(coup != null)
-                coup.Execute();
+                coup.Dexecute();
         }
         @Override
         public void keyReleased(KeyEvent keyEvent) { }
@@ -56,13 +54,13 @@ public class PlayerControler {
             if((abs(arrivee.x -x) == 1 && arrivee.y - y == 0 ) || (abs(arrivee.y -y) == 1 && arrivee.x - x == 0 )) {
                 if (arrivee.x - x == 0)
                     if (arrivee.y - y > 0)
-                        coup = new Coup(BAS);
+                        coup = CreateCoup(BAS);
                     else
-                        coup = new Coup(HAUT);
+                        coup = CreateCoup(HAUT);
                 else if (arrivee.x - x > 0)
-                    coup = new Coup(DROITE);
+                    coup = CreateCoup(DROITE);
                     else
-                    coup = new Coup(GAUCHE);
+                    coup = CreateCoup(GAUCHE);
                 coup.Execute();
                 return;
             }
@@ -90,40 +88,44 @@ public class PlayerControler {
         public void mouseExited(MouseEvent mouseEvent) { }
     };
 
+    Coup CreateCoup(Coup.Dir dir){
+        if(!CanMove(dir))
+            return null;
+        Coup c = new Coup(dir,CanPush(dir));
+        return c;
+    }
 
-    void Move(){
-        if(map[y+ymov][x+xmov] == MUR)
-            return;
-        if(map[y+ymov][x+xmov] == CAISSE && (map[y + ymov * 2][x + xmov * 2] == MUR || map[y + ymov * 2][x + xmov * 2] == CAISSE))
-            return;
-
-        if(map[y + ymov][x + xmov] == CAISSE || map[y + ymov][x + xmov] == CAISSEONBUT){
-            CleanCaisseCase(x + xmov ,y + ymov);
-            AjoutCaisseCase(x + xmov * 2,y + ymov  * 2);
-        }
-        
+    void Move(Point direction){
         CleanPlayerCase();
-        x+=xmov;
-        y+=ymov;
+        x+=direction.x;
+        y+=direction.y;
+        AjoutPlayerCase();
+    }
+    void Demove(Point direction){
+        CleanPlayerCase();
+        x-=direction.x;
+        y-=direction.y;
         AjoutPlayerCase();
     }
 
-    void MoveLeft(){
-        xmov = -1;
-        ymov = 0;
+    void MoveCaisse(Point direction){
+        CleanCaisseCase(x + direction.x ,y + direction.y);
+        AjoutCaisseCase(x + direction.x * 2,y + direction.y  * 2);
     }
 
-    void MoveRight(){
-        xmov = 1;
-        ymov = 0;
+    void DemoveCaisse(Point direction){
+        CleanCaisseCase(x + direction.x * 2,y + direction.y  * 2);
+        AjoutCaisseCase(x + direction.x ,y + direction.y);
     }
-    void MoveUp(){
-        xmov = 0;
-        ymov = -1;
+
+    boolean CanMove(Coup.Dir dir){
+        Point m = Coup.DirToPoint(dir);
+        return (map[y+m.y][x+m.x] != MUR) && (map[y + m.y][x + m.x] != CAISSE || CanPush(dir));
     }
-    void MoveDown(){
-        xmov = 0;
-        ymov = 1;
+
+    boolean CanPush(Coup.Dir dir){
+        Point m = Coup.DirToPoint(dir);
+        return (map[y + m.y][x + m.x] == CAISSE || map[y + m.y][x + m.x] == CAISSEONBUT) && !(map[y+m.y][x+m.x] == CAISSE && (map[y + m.y * 2][x + m.x * 2] == MUR || map[y + m.y * 2][x + m.x * 2] == CAISSE));
     }
 
     void CleanPlayerCase(){
