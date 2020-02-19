@@ -4,13 +4,13 @@ import Modele.GameManager;
 
 import java.awt.*;
 
-import static Global.Tools.CAISSE;
-import static Global.Tools.MUR;
+import static Controller.Coup.Dir.*;
+import static Global.Tools.*;
 import static Modele.GameManager.niveau;
 
 public class Deplacement {
     static Point arrivee;
-    public static deplist Djikstra(Point depart, Point arr){
+    public static Coup Djikstra(Point depart, Point arr){
         boolean [][] parcours;
         arrivee = arr;
         parcours = new boolean[GameManager.niveau().lignes][GameManager.niveau().colonnes];
@@ -20,16 +20,17 @@ public class Deplacement {
                 if(map[i][j] == MUR || map[i][j] == CAISSE)
                     parcours[i][j] = true;
 
-        return Djik_rec(depart,parcours);
+
+        return Clean(Djik_rec(depart,parcours));
     }
 
-    static deplist Djik_rec(Point p, boolean [][] parcours){
+    static Coup Djik_rec(Point p, boolean [][] parcours){
         if(p.equals(arrivee))
-            return new deplist(-1,0,null);
+            return new Coup(RIEN,null);
 
         parcours[p.y][p.x] = true;
 
-        deplist[] dir = new deplist [4];
+        Coup[] dir = new Coup [4];
         if(!parcours[p.y-1][p.x])
             dir[0]  = Djik_rec(new Point(p.x,p.y-1),BoolArrCopy(parcours));
         if(!parcours[p.y+1][p.x])
@@ -39,28 +40,43 @@ public class Deplacement {
         if(!parcours[p.y][p.x +1])
             dir[3] = Djik_rec(new Point(p.x+1,p.y),BoolArrCopy(parcours));
 
-        int min = 4;
+        Coup.Dir min = RIEN;
         for (int i = 0; i < 4; i++) {
-            if(dir[i] != null && (min == 4 || dir[i].poid < dir[min].poid))
-                min = i;
+            if(dir[i] != null && (min == RIEN || Poid(dir[i]) < Poid(dir[Coup.DirToInt(min)])))
+                min = Coup.IntToDir(i);
         }
 
-        if(min == 4)
+        if(min == RIEN)
             return null;
 
-        return new deplist(min,dir[min].poid+1,dir[min]);
+        return new Coup(min,dir[Coup.DirToInt(min)]);
     }
 
-    public static class deplist{
-        public deplist(int d, int p, deplist n){
-            dep = d;
-            poid = p;
-            next = n;
+    static private int Poid(Coup c){
+        if(c.next == null)
+            return 1;
+        Coup cc = c.next;
+        int count = 1;
+        while (cc != null){
+            cc=cc.next;
+            count++;
         }
-        public int dep;
-        int poid;
-        public deplist next;
+        return count;
+    }
 
+    static Coup Clean(Coup c){
+        while(c !=null && c.dir == RIEN)
+            c=c.next;
+        if(c == null)
+            return null;
+        Coup cc = c;
+        while(cc.next !=null){
+            if(cc.next.dir ==RIEN)
+                cc.next = cc.next.next;
+            else
+                cc=cc.next;
+        }
+        return c;
     }
 
     static boolean [][] BoolArrCopy(boolean [][] arr){

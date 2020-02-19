@@ -11,14 +11,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static Controller.Coup.Dir.*;
 import static Global.Tools.*;
 import static Modele.GameManager.*;
 import static java.lang.Math.abs;
 
 public class PlayerControler {
     int [][]map;
-    public Point coord = new Point ();
-
     int x,y;
     int xmov = 0;
     int ymov = 0;
@@ -33,17 +32,15 @@ public class PlayerControler {
 
         @Override
         public void keyPressed(KeyEvent keyEvent) {
-            int kc = keyEvent.getKeyCode();
-            switch (kc){
-                case KeyEvent.VK_UP : MoveUp(); break;
-                case KeyEvent.VK_DOWN : MoveDown(); break;
-                case KeyEvent.VK_LEFT: MoveLeft(); break;
-                case KeyEvent.VK_RIGHT : MoveRight(); break;
+            Coup coup = null;
+            switch (keyEvent.getKeyCode()){
+                case KeyEvent.VK_UP : coup = new Coup(HAUT); break;
+                case KeyEvent.VK_DOWN : coup = new Coup(BAS); break;
+                case KeyEvent.VK_LEFT: coup = new Coup(GAUCHE); break;
+                case KeyEvent.VK_RIGHT : coup = new Coup(DROITE); break;
             }
-            if(kc == KeyEvent.VK_UP || kc == KeyEvent.VK_DOWN || kc == KeyEvent.VK_LEFT || kc == KeyEvent.VK_RIGHT ) {
-                Move();
-                GameManager.EndTurn();
-            }
+            if(coup != null)
+                coup.Execute();
         }
         @Override
         public void keyReleased(KeyEvent keyEvent) { }
@@ -51,46 +48,37 @@ public class PlayerControler {
 
     public MouseListener playermlistener = new MouseListener(){
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        Deplacement.deplist depl;
+        Coup coup = null;
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             Point arrivee  = GetPointInGrid(mouseEvent.getPoint());
-            System.out.println(arrivee);
 
             if((abs(arrivee.x -x) == 1 && arrivee.y - y == 0 ) || (abs(arrivee.y -y) == 1 && arrivee.x - x == 0 )) {
                 if (arrivee.x - x == 0)
                     if (arrivee.y - y > 0)
-                        MoveDown();
+                        coup = new Coup(BAS);
                     else
-                        MoveUp();
+                        coup = new Coup(HAUT);
                 else if (arrivee.x - x > 0)
-                        MoveRight();
+                    coup = new Coup(DROITE);
                     else
-                        MoveLeft();
-                Move();
-                RefreshScreen();
-                GameManager.EndTurn();
+                    coup = new Coup(GAUCHE);
+                coup.Execute();
                 return;
             }
 
-            depl = Deplacement.Djikstra(new Point(x,y),arrivee);
-            if (depl == null) return;
+            coup = Deplacement.Djikstra(new Point(x,y),arrivee);
+            if (coup == null) return;
 
             if(!executorService.isShutdown())executorService.shutdownNow();
             executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(this::AutoMove, 0, 100, TimeUnit.MILLISECONDS);
         }
         private void AutoMove() {
-            switch (depl.dep){
-                case 0: MoveUp();break;
-                case 1: MoveDown();break;
-                case 2: MoveLeft();break;
-                case 3: MoveRight();break;
-                case -1:executorService.shutdownNow();return;
-            }
-            Move();
-            RefreshScreen();
-            depl = depl.next;
+            coup.Execute();
+            coup = coup.next;
+            if(coup == null)
+                executorService.shutdownNow();
         }
         @Override
         public void mousePressed(MouseEvent mouseEvent) { }

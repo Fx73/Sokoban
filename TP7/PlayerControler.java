@@ -51,7 +51,7 @@ public class PlayerControler {
 
     public MouseListener playermlistener = new MouseListener(){
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        Deplacement.deplist depl;
+        //Deplacement.deplist depl;
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             Point arrivee  = GetPointInGrid(mouseEvent.getPoint());
@@ -73,15 +73,15 @@ public class PlayerControler {
                 return;
             }
 
-            depl = Deplacement.Djikstra(new Point(x,y),arrivee);
-            if (depl == null) return;
+            //depl = Deplacement.Djikstra(new Point(x,y),arrivee);
+            //if (depl == null) return;
 
             if(!executorService.isShutdown())executorService.shutdownNow();
             executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(this::AutoMove, 0, 100, TimeUnit.MILLISECONDS);
         }
         private void AutoMove() {
-            switch (depl.dep){
+            /*switch (depl.dep){
                 case 0: MoveUp();break;
                 case 1: MoveDown();break;
                 case 2: MoveLeft();break;
@@ -90,7 +90,7 @@ public class PlayerControler {
             }
             Move();
             RefreshScreen();
-            depl = depl.next;
+            depl = depl.next;*/
         }
         @Override
         public void mousePressed(MouseEvent mouseEvent) { }

@@ -48,9 +48,8 @@ public class GameManager {
                 if(niveaux[lvlno].mapGet()[i][j] == CAISSE || niveaux[lvlno].mapGet()[i][j] == BUT)
                     return;
 
-        if (lvlno < niveaux.length)
-            lvlno ++;
-        else
+        lvlno ++;
+        if (lvlno >= niveaux.length)
             Exit();
         interfacegraphique.RemoveFrame();
         StartLevel();
@@ -91,9 +90,9 @@ public class GameManager {
 
     public static void InstanceGame(Niveau[] entreeniveaux){
         niveaux = entreeniveaux;
+        lvlno = (int)Configuration.Lis("NiveauCourant");
         interfacegraphique = new InterfaceGraphique();
         playercontroller = new PlayerControler();
-        lvlno = (int)Configuration.Lis("NiveauCourant");
     }
 
 
