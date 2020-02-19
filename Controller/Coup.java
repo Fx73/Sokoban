@@ -4,7 +4,7 @@ import Modele.GameManager;
 
 import java.awt.*;
 
-public class Coup {
+public class Coup extends Commande {
     public static enum Dir {
         HAUT,
         BAS,
@@ -43,6 +43,9 @@ public class Coup {
         GameManager.EndTurn();
     }
 
+    public void SetNext(Coup _next){
+        next = _next;
+    }
     public static int DirToInt(Dir d){
         switch (d){
             case HAUT:return 0;

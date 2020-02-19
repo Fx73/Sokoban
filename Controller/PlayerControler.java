@@ -38,7 +38,7 @@ public class PlayerControler {
                 case KeyEvent.VK_RIGHT : coup = CreateCoup(DROITE); break;
             }
             if(coup != null)
-                coup.Dexecute();
+                historique.Faire(coup);
         }
         @Override
         public void keyReleased(KeyEvent keyEvent) { }
@@ -61,7 +61,7 @@ public class PlayerControler {
                     coup = CreateCoup(DROITE);
                     else
                     coup = CreateCoup(GAUCHE);
-                coup.Execute();
+                historique.Faire(coup);
                 return;
             }
 
@@ -73,7 +73,7 @@ public class PlayerControler {
             executorService.scheduleAtFixedRate(this::AutoMove, 0, 100, TimeUnit.MILLISECONDS);
         }
         private void AutoMove() {
-            coup.Execute();
+            historique.Faire(coup);
             coup = coup.next;
             if(coup == null)
                 executorService.shutdownNow();

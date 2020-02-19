@@ -18,6 +18,7 @@ public class GameManager {
     public static Integer lvlno = 0;
     public static InterfaceGraphique interfacegraphique;
     public static PlayerControler playercontroller;
+    public static HistoriquePile historique;
 
     public static KeyListener GameKeyListener=new KeyListener(){
         @Override
@@ -25,11 +26,17 @@ public class GameManager {
 
         @Override
         public void keyPressed(KeyEvent keyEvent) {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_Z)
+                historique.Annuler();
+            if (keyEvent.getKeyCode() == KeyEvent.VK_Y)
+                historique.Refaire();
+
             if (keyEvent.getKeyCode() == KeyEvent.VK_F12 || keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE)
                 interfacegraphique.toggleFullScreen();
-            if (keyEvent.getKeyCode() == KeyEvent.VK_R) {
+
+            if (keyEvent.getKeyCode() == KeyEvent.VK_R)
                 ResetLevel();
-            }
+
             if (keyEvent.getKeyCode() == KeyEvent.VK_Q || keyEvent.getKeyCode() == KeyEvent.VK_A) {
                 Exit();
             }
@@ -63,6 +70,7 @@ public class GameManager {
             Configuration.logger().severe("Erreur d'ecriture dans le ficher de sauvegarde");
         }
         SwingUtilities.invokeLater(interfacegraphique);
+        historique = new HistoriquePile();
     }
 
     static public void RefreshScreen(){
@@ -84,6 +92,7 @@ public class GameManager {
         catch (Exception e){
             Configuration.logger().severe("Erreur de lecture du fichier de sauvegarde");
         }
+        historique = new HistoriquePile();
         playercontroller.ResetController();
         RefreshScreen();
     }
