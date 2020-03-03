@@ -1,9 +1,7 @@
 package Vue;
 
-import Global.*;
 import Modele.GameManager;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,9 +10,9 @@ import static java.lang.Integer.min;
 
 
 public class NiveauGraphique extends JComponent {
-    ImageBank ibank;
+    ImageBankAll ibank;
     public NiveauGraphique(){
-        ibank = new ImageBank();
+        ibank = new ImageBankAll();
     }
 
     public void paintComponent(Graphics g) {
@@ -43,9 +41,9 @@ public class NiveauGraphique extends JComponent {
             for(int j = 0; j< GameManager.niveau().lignes;j++){
                 int xplace = ((center.x - GameManager.niveau().colonnes * (imgsize/2)) + i * imgsize);
                 int yplace = ((center.y - GameManager.niveau().lignes * (imgsize/2)) + j * imgsize);
-                drawable.drawImage(ibank.sol, xplace, yplace, imgsize, imgsize, null);
-                drawable.drawImage(ibank.GetImage(map[j][i],j,i), xplace, yplace, imgsize, imgsize, null);
-                if(map[j][i] == POUSSEURONBUT) drawable.drawImage(ibank.pousseuridle[0], xplace,yplace, imgsize, imgsize, null);
+                //drawable.drawImage(ibank.sol, xplace, yplace, imgsize, imgsize, null);
+                //drawable.drawImage(ibank.GetImage(map[j][i],j,i), xplace, yplace, imgsize, imgsize, null);
+                //if(map[j][i] == POUSSEURONBUT) drawable.drawImage(ibank.pousseuridle[0], xplace,yplace, imgsize, imgsize, null);
             }
 	}
 

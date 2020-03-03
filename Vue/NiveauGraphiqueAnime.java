@@ -5,17 +5,18 @@ import Modele.GameManager;
 import javax.swing.*;
 import java.awt.*;
 
-import static Global.Tools.POUSSEUR;
-import static Global.Tools.POUSSEURONBUT;
+import static Global.Tools.*;
 import static java.lang.Integer.min;
 
 
 public class NiveauGraphiqueAnime extends JComponent {
-    ImageBank ibank;
+    ImageBankAll ibankall;
+    ImageBankMur ibankmur;
     Animation animationpousseur;
     public NiveauGraphiqueAnime(){
-        ibank = new ImageBank();
-        animationpousseur = new AnimationPousseur(ibank);
+        ibankall = new ImageBankAll();
+        ibankmur = new ImageBankMur();
+        animationpousseur = new AnimationPousseur(new ImageBankPousseur());
     }
 
     public void paintComponent(Graphics g) {
@@ -44,9 +45,16 @@ public class NiveauGraphiqueAnime extends JComponent {
             for(int j = 0; j< GameManager.niveau().lignes;j++){
                 int xplace = ((center.x - GameManager.niveau().colonnes * (imgsize/2)) + i * imgsize);
                 int yplace = ((center.y - GameManager.niveau().lignes * (imgsize/2)) + j * imgsize);
-                drawable.drawImage(ibank.sol, xplace, yplace, imgsize, imgsize, null);
-                drawable.drawImage(ibank.GetImage(map[j][i],j,i), xplace, yplace, imgsize, imgsize, null);
-                if(map[j][i] == POUSSEURONBUT || map[j][i] == POUSSEUR) drawable.drawImage(animationpousseur.GetImage(), xplace,yplace, imgsize, imgsize, null);
+                drawable.drawImage(ibankall.sol, xplace, yplace, imgsize, imgsize, null);
+
+                if(map[j][i] == POUSSEURONBUT || map[j][i] == POUSSEUR)
+                    drawable.drawImage(animationpousseur.GetImage(), xplace,yplace, imgsize, imgsize, null);
+                else if(map[j][i] == MUR || map[j][i] == 0){
+                    ibankmur.SetCoord(j,i);
+                    drawable.drawImage(ibankmur.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
+                }
+                else
+                    drawable.drawImage(ibankall.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
             }
 	}
 

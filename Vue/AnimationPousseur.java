@@ -7,12 +7,11 @@ import Modele.GameManager;
 import java.awt.*;
 
 public class AnimationPousseur extends Animation{
-    AnimationPousseur(ImageBank _imagebank) {
+    AnimationPousseur(ImageBankPousseur _imagebank) {
         super(_imagebank);
     }
 
     public Image GetImage(){
-        return imagebank.pousseuridle[Coup.DirToInt(GameManager.playercontroller.lastdir)];
+        return imagebank.GetImage(Coup.DirToInt(GameManager.playercontroller.lastdir));
     }
-
 }
