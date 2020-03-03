@@ -7,9 +7,7 @@ public abstract class ImageBank {
         Load();
     }
     Point coord = null;
-    private void Load() {
-
-    }
+     abstract void Load();
 
     public Image GetImage(int a){
         return null;

@@ -4,6 +4,8 @@ import Modele.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static Global.Tools.*;
 import static java.lang.Integer.min;
@@ -17,7 +19,17 @@ public class NiveauGraphiqueAnime extends JComponent {
         ibankall = new ImageBankAll();
         ibankmur = new ImageBankMur();
         animationpousseur = new AnimationPousseur(new ImageBankPousseur());
+        new Timer(160, new ActionListener() { @Override public void actionPerformed(ActionEvent actionEvent) { tictac();}}).start();
     }
+
+    void tictac () {
+        animationpousseur.AvancerAnimation();
+
+        GameManager.RefreshScreen();
+    }
+
+
+
 
     public void paintComponent(Graphics g) {
 		// Graphics 2D est le vrai type de l'objet passé en paramètre
@@ -48,7 +60,7 @@ public class NiveauGraphiqueAnime extends JComponent {
                 drawable.drawImage(ibankall.sol, xplace, yplace, imgsize, imgsize, null);
 
                 if(map[j][i] == POUSSEURONBUT || map[j][i] == POUSSEUR)
-                    drawable.drawImage(animationpousseur.GetImage(), xplace,yplace, imgsize, imgsize, null);
+                    drawable.drawImage(animationpousseur.GetAnimation(), xplace,yplace, imgsize, imgsize, null);
                 else if(map[j][i] == MUR || map[j][i] == 0){
                     ibankmur.SetCoord(j,i);
                     drawable.drawImage(ibankmur.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);

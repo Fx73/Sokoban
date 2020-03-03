@@ -20,6 +20,7 @@ public class PlayerControler {
     int [][]map;
     int x,y;
     public Coup.Dir lastdir = BAS;
+    public boolean ismoving = false;
 
     public PlayerControler(){
         ResetController();
@@ -74,10 +75,13 @@ public class PlayerControler {
             executorService.scheduleAtFixedRate(this::AutoMove, 0, 100, TimeUnit.MILLISECONDS);
         }
         private void AutoMove() {
+            ismoving = true;
             historique.Faire(coup);
             coup = coup.next;
-            if(coup == null)
+            if(coup == null){
+                //ismoving = false;
                 executorService.shutdownNow();
+            }
         }
         @Override
         public void mousePressed(MouseEvent mouseEvent) { }

@@ -24,7 +24,7 @@ public class ImageBankMur extends ImageBank {
     Image murhautbas;
     Image murplein;
 
-    private void Load(){
+    void Load(){
         try {
             mur = ImageIO.read( Configuration.charge("Images/Murs/Mur.png"));
             murseulgauche = ImageIO.read( Configuration.charge("Images/Murs/Murseulgauche.png"));
