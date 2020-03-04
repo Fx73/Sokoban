@@ -14,10 +14,12 @@ import static java.lang.Integer.min;
 public class NiveauGraphique extends JComponent {
     ImageBankAll ibankall;
     ImageBankMur ibankmur;
+    ImageBankArrow ibankarrow;
     Animation animationpousseur;
     public NiveauGraphique(){
         ibankall = new ImageBankAll();
         ibankmur = new ImageBankMur();
+        ibankarrow = new ImageBankArrow();
         animationpousseur = new AnimationPousseur(new ImageBankPousseur());
     }
 
@@ -58,6 +60,9 @@ public class NiveauGraphique extends JComponent {
                 else
                     drawable.drawImage(ibankall.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
             }
+        //On affiche les fleches
+        drawable.drawImage(ibankarrow.GetImage(0),0,0,imgsize*2,imgsize*2,null);
+        drawable.drawImage(ibankarrow.GetImage(1),imgsize*2,0,imgsize*2,imgsize*2,null);
 	}
 
 

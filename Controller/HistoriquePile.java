@@ -12,7 +12,7 @@ public class HistoriquePile {
     }
 
     public void Annuler(){
-        if(passe == null)return;
+        if(PasseEstVide())return;
         Commande c = passe.next;
         passe.next = null;
         futur = passe;
@@ -21,11 +21,18 @@ public class HistoriquePile {
     }
 
     public void Refaire(){
-        if(futur == null)return;
+        if(FuturEstVide())return;
         Commande c = futur.next;
         futur.next = null;
         passe = futur;
         futur = c;
         passe.Execute();
+    }
+
+    public boolean PasseEstVide(){
+        return passe == null;
+    }
+    public boolean FuturEstVide(){
+        return futur == null;
     }
 }

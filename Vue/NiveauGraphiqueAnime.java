@@ -14,10 +14,12 @@ import static java.lang.Integer.min;
 public class NiveauGraphiqueAnime extends JComponent {
     ImageBankAll ibankall;
     ImageBankMur ibankmur;
+    ImageBankArrow ibankarrow;
     Animation animationpousseur;
     public NiveauGraphiqueAnime(){
         ibankall = new ImageBankAll();
         ibankmur = new ImageBankMur();
+        ibankarrow = new ImageBankArrow();
         animationpousseur = new AnimationPousseur(new ImageBankPousseur());
         new Timer(160, new ActionListener() { @Override public void actionPerformed(ActionEvent actionEvent) { tictac();}}).start();
     }
@@ -51,7 +53,7 @@ public class NiveauGraphiqueAnime extends JComponent {
 		//Calcul de la taille d'un objet
         int imgsize = min(width / GameManager.niveau().colonnes ,height / GameManager.niveau().lignes);
 
-        // On affiche
+        // On affiche le jeu
         int[][]map = GameManager.niveau().mapGet();
         for(int i = 0; i< GameManager.niveau().colonnes;i++)
             for(int j = 0; j< GameManager.niveau().lignes;j++){
@@ -68,7 +70,12 @@ public class NiveauGraphiqueAnime extends JComponent {
                 else
                     drawable.drawImage(ibankall.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
             }
-	}
+
+        //On affiche les fleches
+        drawable.drawImage(ibankarrow.GetImage(0),0,0,imgsize*2,imgsize*2,null);
+        drawable.drawImage(ibankarrow.GetImage(1),imgsize*2,0,imgsize*2,imgsize*2,null);
+
+    }
 
 
 
