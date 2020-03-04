@@ -33,6 +33,8 @@ public class GameManager {
 
             if (keyEvent.getKeyCode() == KeyEvent.VK_F12 || keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE)
                 interfacegraphique.toggleFullScreen();
+            if (keyEvent.getKeyCode() == KeyEvent.VK_F11)
+                interfacegraphique.toggleAnimation();
 
             if (keyEvent.getKeyCode() == KeyEvent.VK_R)
                 ResetLevel();

@@ -79,7 +79,7 @@ public class PlayerControler {
             historique.Faire(coup);
             coup = coup.next;
             if(coup == null){
-                //ismoving = false;
+                ismoving = false;
                 executorService.shutdownNow();
             }
         }

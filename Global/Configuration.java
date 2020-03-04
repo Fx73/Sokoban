@@ -22,10 +22,21 @@ public final class Configuration {
         super();
     }
 
+
+
+    /** Liste des paramètres configurables et sauvegardable
+     *  A faire correspondre avec la class Properties pour la sauvegarde
+     */
     private static String Sequence = "Liste";
     private static String LogLevel = "WARNING";
     private static Boolean Maximized = false;
     private static Integer NiveauCourant = 0;
+    private static Boolean Animations = true;
+
+
+    /**
+    */
+
 
     public static Boolean Ecris(String S, Object valeur) {
         Field[] fields = instance().getClass().getDeclaredFields();

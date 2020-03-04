@@ -16,10 +16,10 @@ public class AnimationPousseur extends Animation{
 
     public Image GetAnimation(){
         int ref = Coup.DirToInt(GameManager.playercontroller.lastdir);
-        if(GameManager.playercontroller.ismoving)
+        //if(GameManager.playercontroller.ismoving)
             return imagebank.GetImage(ref + 4 * animstep + 4);
-        else
-            return imagebank.GetImage(ref);
+        //else
+        //    return imagebank.GetImage(ref);
     }
 
 

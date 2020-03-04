@@ -39,6 +39,8 @@ public class Properties {
         out_stream.write("Maximized="+ Configuration.Lis("Maximized").toString() +"\n");
         out_stream.write("# Niveau en cours\n");
         out_stream.write("NiveauCourant="+ Configuration.Lis("NiveauCourant").toString() +"\n");
+        out_stream.write("# Animations\n");
+        out_stream.write("Animations="+ Configuration.Lis("Animations").toString() +"\n");
 
         out_stream.close();
     }

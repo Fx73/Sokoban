@@ -4,15 +4,21 @@ import Modele.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static Global.Tools.*;
 import static java.lang.Integer.min;
 
 
 public class NiveauGraphique extends JComponent {
-    ImageBankAll ibank;
+    ImageBankAll ibankall;
+    ImageBankMur ibankmur;
+    Animation animationpousseur;
     public NiveauGraphique(){
-        ibank = new ImageBankAll();
+        ibankall = new ImageBankAll();
+        ibankmur = new ImageBankMur();
+        animationpousseur = new AnimationPousseur(new ImageBankPousseur());
     }
 
     public void paintComponent(Graphics g) {
@@ -41,9 +47,16 @@ public class NiveauGraphique extends JComponent {
             for(int j = 0; j< GameManager.niveau().lignes;j++){
                 int xplace = ((center.x - GameManager.niveau().colonnes * (imgsize/2)) + i * imgsize);
                 int yplace = ((center.y - GameManager.niveau().lignes * (imgsize/2)) + j * imgsize);
-                //drawable.drawImage(ibank.sol, xplace, yplace, imgsize, imgsize, null);
-                //drawable.drawImage(ibank.GetImage(map[j][i],j,i), xplace, yplace, imgsize, imgsize, null);
-                //if(map[j][i] == POUSSEURONBUT) drawable.drawImage(ibank.pousseuridle[0], xplace,yplace, imgsize, imgsize, null);
+                drawable.drawImage(ibankall.sol, xplace, yplace, imgsize, imgsize, null);
+
+                if(map[j][i] == POUSSEURONBUT || map[j][i] == POUSSEUR)
+                    drawable.drawImage(animationpousseur.GetAnimation(), xplace,yplace, imgsize, imgsize, null);
+                else if(map[j][i] == MUR || map[j][i] == 0){
+                    ibankmur.SetCoord(j,i);
+                    drawable.drawImage(ibankmur.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
+                }
+                else
+                    drawable.drawImage(ibankall.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
             }
 	}
 

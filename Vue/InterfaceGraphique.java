@@ -12,13 +12,22 @@ import static java.lang.Integer.min;
 // L'interface runnable déclare une méthode run
 public class InterfaceGraphique implements Runnable {
 	JFrame frame;
+	private NiveauGraphique niveaugraphique;
+	private NiveauGraphiqueAnime niveaugraphiqueanime;
 
 	public void run() {
 		// Creation d'une fenetre
 		frame = new JFrame("Sokoban : Niveau " + lvlno.toString() + " : " + niveaux[lvlno].nom() );
 
 		// Ajout de notre composant de dessin dans la fenetre
-		frame.add(new NiveauGraphiqueAnime());
+		if((Boolean) Configuration.Lis("Animations")) {
+			niveaugraphiqueanime = new NiveauGraphiqueAnime();
+			frame.add(niveaugraphiqueanime);
+		}else{
+			niveaugraphique = new NiveauGraphique();
+			frame.add(niveaugraphique);
+		}
+
 
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,6 +62,26 @@ public class InterfaceGraphique implements Runnable {
 		} else {
 			device.setFullScreenWindow(frame);
 			Configuration.Ecris("Maximized",true);
+		}
+	}
+
+	public void toggleAnimation(){
+		if((Boolean) Configuration.Lis("Animations")){
+			frame.remove(niveaugraphiqueanime);
+			niveaugraphiqueanime = null;
+			niveaugraphique = new NiveauGraphique();
+			frame.add(niveaugraphique);
+			frame.revalidate();
+			Refresh();
+			Configuration.Ecris("Animations",false);
+		} else {
+			frame.remove(niveaugraphique);
+			niveaugraphique = null;
+			niveaugraphiqueanime = new NiveauGraphiqueAnime();
+			frame.add(niveaugraphiqueanime);
+			frame.revalidate();
+			Refresh();
+			Configuration.Ecris("Animations",true);
 		}
 	}
 }
