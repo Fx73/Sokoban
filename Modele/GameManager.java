@@ -19,6 +19,7 @@ public class GameManager {
     public static InterfaceGraphique interfacegraphique;
     public static PlayerControler playercontroller;
     public static HistoriquePile historique;
+    public static IA ia;
 
     public static KeyListener GameKeyListener=new KeyListener(){
         @Override
@@ -39,6 +40,9 @@ public class GameManager {
             if (keyEvent.getKeyCode() == KeyEvent.VK_R)
                 ResetLevel();
 
+            if(keyEvent.getKeyCode() == KeyEvent.VK_I)
+                ia.EnableDisable();
+
             if (keyEvent.getKeyCode() == KeyEvent.VK_Q || keyEvent.getKeyCode() == KeyEvent.VK_A) {
                 Exit();
             }
@@ -48,7 +52,13 @@ public class GameManager {
         public void keyReleased(KeyEvent keyEvent) { }
     };
 
-    private static Niveau copieniveau;
+    public static void InstanceGame(Niveau[] entreeniveaux){
+        niveaux = entreeniveaux;
+        lvlno = (int)Configuration.Lis("NiveauCourant");
+        interfacegraphique = new InterfaceGraphique();
+        playercontroller = new PlayerControler();
+        ia = new IA();
+    }
 
     public static void EndTurn(){
         RefreshScreen();
@@ -87,9 +97,7 @@ public class GameManager {
         InputStream in_stream = ClassLoader.getSystemClassLoader().getResourceAsStream("level.save");
         try {
             int [][] map = new LecteurNiveaux().lisProchainNiveau(in_stream);
-            LecteurNiveaux.printNiveau(niveaux[lvlno]);
             niveaux[lvlno].mapSet(map);
-            LecteurNiveaux.printNiveau(niveaux[lvlno]);
         }
         catch (Exception e){
             Configuration.logger().severe("Erreur de lecture du fichier de sauvegarde");
@@ -97,13 +105,6 @@ public class GameManager {
         historique = new HistoriquePile();
         playercontroller.ResetController();
         RefreshScreen();
-    }
-
-    public static void InstanceGame(Niveau[] entreeniveaux){
-        niveaux = entreeniveaux;
-        lvlno = (int)Configuration.Lis("NiveauCourant");
-        interfacegraphique = new InterfaceGraphique();
-        playercontroller = new PlayerControler();
     }
 
 

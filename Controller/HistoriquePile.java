@@ -5,6 +5,7 @@ public class HistoriquePile {
     Commande futur;
 
     public void Faire(Commande c){
+        if(c == null) return ; // Correspond a une impossibilite de se deplacer pour le player. Rien n'est enregistre
         c.Execute();
         c.next = passe;
         passe = c;

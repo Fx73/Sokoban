@@ -12,21 +12,17 @@ import static java.lang.Integer.min;
 // L'interface runnable déclare une méthode run
 public class InterfaceGraphique implements Runnable {
 	JFrame frame;
-	private NiveauGraphique niveaugraphique;
-	private NiveauGraphiqueAnime niveaugraphiqueanime;
 
 	public void run() {
 		// Creation d'une fenetre
 		frame = new JFrame("Sokoban : Niveau " + lvlno.toString() + " : " + niveaux[lvlno].nom() );
 
 		// Ajout de notre composant de dessin dans la fenetre
-		if((Boolean) Configuration.Lis("Animations")) {
-			niveaugraphiqueanime = new NiveauGraphiqueAnime();
-			frame.add(niveaugraphiqueanime);
-		}else{
-			niveaugraphique = new NiveauGraphique();
-			frame.add(niveaugraphique);
-		}
+		if((Boolean) Configuration.Lis("Animations"))
+			frame.add(new NiveauGraphiqueAnime());
+		else
+			frame.add(new NiveauGraphique());
+
 
 
 		// Un clic sur le bouton de fermeture clos l'application
@@ -34,15 +30,16 @@ public class InterfaceGraphique implements Runnable {
 		frame.addKeyListener(GameKeyListener);
 		frame.addKeyListener(playercontroller.playerlistener);
 		frame.addMouseListener(playercontroller.playermlistener);
-
+        frame.addMouseListener(new HistoriqueMouseListener());
 		// On fixe la taille et on demarre
 		frame.setSize(600, 600);
-		frame.setVisible(true);
+		if((Boolean) Configuration.Lis("Maximized")) {
+            frame.setUndecorated(true);
+            GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+        }
+        frame.setVisible(true);
 
-		if((Boolean) Configuration.Lis("Maximized"))
-			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
-
-	}
+    }
 
 	public void Refresh(){
 		frame.repaint();
@@ -55,33 +52,20 @@ public class InterfaceGraphique implements Runnable {
 	public int ImgSize(){return min(frame.getWidth() / GameManager.niveau().colonnes ,frame.getHeight() / GameManager.niveau().lignes);}
 
 	public void toggleFullScreen(){
-		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		if((Boolean) Configuration.Lis("Maximized")){
-			device.setFullScreenWindow(null);
-			Configuration.Ecris("Maximized",false);
-		} else {
-			device.setFullScreenWindow(frame);
-			Configuration.Ecris("Maximized",true);
-		}
+        frame.dispose();
+        if((Boolean) Configuration.Lis("Maximized"))
+            Configuration.Ecris("Maximized",false);
+		 else
+            Configuration.Ecris("Maximized",true);
+		run();
 	}
 
 	public void toggleAnimation(){
-		if((Boolean) Configuration.Lis("Animations")){
-			frame.remove(niveaugraphiqueanime);
-			niveaugraphiqueanime = null;
-			niveaugraphique = new NiveauGraphique();
-			frame.add(niveaugraphique);
-			frame.revalidate();
-			Refresh();
-			Configuration.Ecris("Animations",false);
-		} else {
-			frame.remove(niveaugraphique);
-			niveaugraphique = null;
-			niveaugraphiqueanime = new NiveauGraphiqueAnime();
-			frame.add(niveaugraphiqueanime);
-			frame.revalidate();
-			Refresh();
+        frame.dispose();
+        if((Boolean) Configuration.Lis("Animations"))
+            Configuration.Ecris("Animations",false);
+		 else
 			Configuration.Ecris("Animations",true);
-		}
+		run();
 	}
 }
