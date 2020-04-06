@@ -168,6 +168,10 @@ public class PlayerControler {
                     return;
                 }
     }
+    public Point GetPlayerPosition(){
+        return new Point(x,y);
+    }
+
 
     public static Point GetPointInGrid(Point coord){
         int imgsize = interfacegraphique.ImgSize();
@@ -176,4 +180,6 @@ public class PlayerControler {
         int yc = (coord.y - zero.y)/imgsize;
         return new Point(xc,yc);
     }
+
+
 }

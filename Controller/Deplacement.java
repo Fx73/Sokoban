@@ -26,7 +26,7 @@ public class Deplacement {
 
     static Coup Djik_rec(Point p, boolean [][] parcours){
         if(p.equals(arrivee))
-            return new Coup(RIEN,false,null);
+            return new Coup(RIEN,false,null); //on est à l'arrivée
 
         parcours[p.y][p.x] = true;
 

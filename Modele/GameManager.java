@@ -19,6 +19,7 @@ public class GameManager {
     public static InterfaceGraphique interfacegraphique;
     public static PlayerControler playercontroller;
     public static HistoriquePile historique;
+    public static IA ia;
 
     public static KeyListener GameKeyListener=new KeyListener(){
         @Override
@@ -39,13 +40,19 @@ public class GameManager {
             if (keyEvent.getKeyCode() == KeyEvent.VK_R)
                 ResetLevel();
 
+            if (keyEvent.getKeyCode() == KeyEvent.VK_I)
+                ia.MarquerTout(playercontroller.GetPlayerPosition());
+
             if (keyEvent.getKeyCode() == KeyEvent.VK_Q || keyEvent.getKeyCode() == KeyEvent.VK_A) {
                 Exit();
             }
 
         }
         @Override
-        public void keyReleased(KeyEvent keyEvent) { }
+        public void keyReleased(KeyEvent keyEvent) {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_I)
+                interfacegraphique.Demarquer();
+        }
     };
 
     private static Niveau copieniveau;
@@ -104,6 +111,7 @@ public class GameManager {
         lvlno = (int)Configuration.Lis("NiveauCourant");
         interfacegraphique = new InterfaceGraphique();
         playercontroller = new PlayerControler();
+        ia = new IA();
     }
 
 

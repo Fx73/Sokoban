@@ -12,15 +12,29 @@ import static java.lang.Integer.min;
 
 
 public class NiveauGraphique extends JComponent {
-    ImageBankAll ibankall;
+    ImageBankCaisse ibankcaisse;
     ImageBankMur ibankmur;
     ImageBankArrow ibankarrow;
+    ImageBankSol ibanksol;
     Animation animationpousseur;
+    private int marqueur[][];
+
+
     public NiveauGraphique(){
-        ibankall = new ImageBankAll();
+        ibankcaisse = new ImageBankCaisse();
+        ibanksol = new ImageBankSol();
         ibankmur = new ImageBankMur();
         ibankarrow = new ImageBankArrow();
         animationpousseur = new AnimationPousseur(new ImageBankPousseur());
+        marqueur = new int[GameManager.niveau().lignes][GameManager.niveau().colonnes];
+    }
+
+
+    public void Marquer(int x, int y, int valeur){
+        marqueur[y][x] = valeur;
+    }
+    public void Demarquer(){
+        marqueur = new int[GameManager.niveau().lignes][GameManager.niveau().colonnes];
     }
 
     public void paintComponent(Graphics g) {
@@ -49,7 +63,8 @@ public class NiveauGraphique extends JComponent {
             for(int j = 0; j< GameManager.niveau().lignes;j++){
                 int xplace = ((center.x - GameManager.niveau().colonnes * (imgsize/2)) + i * imgsize);
                 int yplace = ((center.y - GameManager.niveau().lignes * (imgsize/2)) + j * imgsize);
-                drawable.drawImage(ibankall.sol, xplace, yplace, imgsize, imgsize, null);
+                ibanksol.SetCoord(j,i);
+                drawable.drawImage(ibanksol.GetImage(marqueur[j][i]), xplace, yplace, imgsize, imgsize, null);
 
                 if(map[j][i] == POUSSEURONBUT || map[j][i] == POUSSEUR)
                     drawable.drawImage(animationpousseur.GetAnimation(), xplace,yplace, imgsize, imgsize, null);
@@ -57,8 +72,8 @@ public class NiveauGraphique extends JComponent {
                     ibankmur.SetCoord(j,i);
                     drawable.drawImage(ibankmur.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
                 }
-                else
-                    drawable.drawImage(ibankall.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
+                else if(map[j][i] == CAISSE || map[j][i] == CAISSEONBUT)
+                    drawable.drawImage(ibankcaisse.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
             }
         //On affiche les fleches
         drawable.drawImage(ibankarrow.GetImage(0),0,0,imgsize*2,imgsize*2,null);

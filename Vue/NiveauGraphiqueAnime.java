@@ -12,16 +12,21 @@ import static java.lang.Integer.min;
 
 
 public class NiveauGraphiqueAnime extends JComponent {
-    ImageBankAll ibankall;
+    ImageBankCaisse ibankcaisse;
     ImageBankMur ibankmur;
     ImageBankArrow ibankarrow;
+    ImageBankSol ibanksol;
     Animation animationpousseur;
+    private int marqueur[][];
+
     public NiveauGraphiqueAnime(){
-        ibankall = new ImageBankAll();
+        ibankcaisse = new ImageBankCaisse();
         ibankmur = new ImageBankMur();
         ibankarrow = new ImageBankArrow();
+        ibanksol = new ImageBankSol();
         animationpousseur = new AnimationPousseur(new ImageBankPousseur());
         new Timer(160, new ActionListener() { @Override public void actionPerformed(ActionEvent actionEvent) { tictac();}}).start();
+        marqueur = new int[GameManager.niveau().lignes][GameManager.niveau().colonnes];
     }
 
     void tictac () {
@@ -30,8 +35,12 @@ public class NiveauGraphiqueAnime extends JComponent {
         GameManager.RefreshScreen();
     }
 
-
-
+    public void Marquer(int x, int y, int valeur){
+        marqueur[y][x] = valeur;
+    }
+    public void Demarquer(){
+        marqueur = new int[GameManager.niveau().lignes][GameManager.niveau().colonnes];
+    }
 
     public void paintComponent(Graphics g) {
 		// Graphics 2D est le vrai type de l'objet passé en paramètre
@@ -59,7 +68,8 @@ public class NiveauGraphiqueAnime extends JComponent {
             for(int j = 0; j< GameManager.niveau().lignes;j++){
                 int xplace = ((center.x - GameManager.niveau().colonnes * (imgsize/2)) + i * imgsize);
                 int yplace = ((center.y - GameManager.niveau().lignes * (imgsize/2)) + j * imgsize);
-                drawable.drawImage(ibankall.sol, xplace, yplace, imgsize, imgsize, null);
+                ibanksol.SetCoord(j,i);
+                drawable.drawImage(ibanksol.GetImage(marqueur[j][i]), xplace, yplace, imgsize, imgsize, null);
 
                 if(map[j][i] == POUSSEURONBUT || map[j][i] == POUSSEUR)
                     drawable.drawImage(animationpousseur.GetAnimation(), xplace,yplace, imgsize, imgsize, null);
@@ -67,8 +77,8 @@ public class NiveauGraphiqueAnime extends JComponent {
                     ibankmur.SetCoord(j,i);
                     drawable.drawImage(ibankmur.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
                 }
-                else
-                    drawable.drawImage(ibankall.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
+                else if(map[j][i] == CAISSE || map[j][i] == CAISSEONBUT)
+                    drawable.drawImage(ibankcaisse.GetImage(map[j][i]), xplace, yplace, imgsize, imgsize, null);
             }
 
         //On affiche les fleches

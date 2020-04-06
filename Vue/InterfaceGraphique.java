@@ -84,4 +84,15 @@ public class InterfaceGraphique implements Runnable {
 			Configuration.Ecris("Animations",true);
 		}
 	}
+
+
+	public void Marquer(int x, int y, int valeur){
+		if(niveaugraphique != null)	niveaugraphique.Marquer(x,y,valeur);
+		if(niveaugraphiqueanime != null) niveaugraphiqueanime.Marquer(x,y,valeur);
+	}
+	public void Demarquer(){
+		if(niveaugraphique != null)	niveaugraphique.Demarquer();
+		if(niveaugraphiqueanime != null) niveaugraphiqueanime.Demarquer();
+	}
+
 }
