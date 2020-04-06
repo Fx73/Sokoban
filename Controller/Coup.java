@@ -2,6 +2,7 @@ package Controller;
 
 import Modele.GameManager;
 
+import javax.management.monitor.GaugeMonitor;
 import java.awt.*;
 
 public class Coup extends Commande {
@@ -76,6 +77,18 @@ public class Coup extends Commande {
             case DROITE: x ++;break;
         }
         return new Point(x,y);
+    }
+
+    public static Dir PointToDir(Point p){
+        if(p.x == -1)
+            return Dir.GAUCHE;
+        if(p.x == 1)
+            return Dir.DROITE;
+        if(p.y == -1)
+            return Dir.HAUT;
+        if(p.y == 1)
+            return Dir.BAS;
+        return Dir.RIEN;
     }
 
 }

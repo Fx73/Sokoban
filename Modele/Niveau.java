@@ -44,4 +44,14 @@ public class Niveau{
 
     public void mapSet(int[][] input){map = input;}
     public int[][] mapGet(){return map;}
+
+    public int[][]mapGetCopy(){
+        int[][]copy = new int[42][42];
+        for (int i = 0; i < 42; i++) {
+            for (int j = 0; j < 42; j++) {
+                copy[i][j]=map[i][j];
+            }
+        }
+        return copy;
+    }
 }

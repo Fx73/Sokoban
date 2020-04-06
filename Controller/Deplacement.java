@@ -10,11 +10,10 @@ import static Modele.GameManager.niveau;
 
 public class Deplacement {
     static Point arrivee;
-    public static Coup Djikstra(Point depart, Point arr){
+    public static Coup Djikstra(Point depart, Point arr, int[][] map){
         boolean [][] parcours;
         arrivee = arr;
         parcours = new boolean[GameManager.niveau().lignes][GameManager.niveau().colonnes];
-        int[][] map = GameManager.niveau().mapGet();
         for (int i = 0; i < niveau().lignes; i++)
             for (int j = 0; j < niveau().colonnes; j++)
                 if(map[i][j] == MUR || map[i][j] == CAISSE)

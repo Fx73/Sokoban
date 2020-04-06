@@ -43,6 +43,8 @@ public class GameManager {
             if (keyEvent.getKeyCode() == KeyEvent.VK_I)
                 ia.MarquerTout(playercontroller.GetPlayerPosition());
 
+            if (keyEvent.getKeyCode() == KeyEvent.VK_S)
+                ia.SolveLevel();
             if (keyEvent.getKeyCode() == KeyEvent.VK_Q || keyEvent.getKeyCode() == KeyEvent.VK_A) {
                 Exit();
             }
@@ -71,13 +73,10 @@ public class GameManager {
         StartLevel();
     }
 
+    static private int[][] sauvegarde;
     static public void StartLevel(){
-        try {
-            new RedacteurNiveau("resources/level.save").ecrisNiveau(niveaux[lvlno]);
-        }
-        catch (Exception e){
-            Configuration.logger().severe("Erreur d'ecriture dans le ficher de sauvegarde");
-        }
+        sauvegarde = niveau().mapGetCopy();
+        playercontroller.ResetController();
         SwingUtilities.invokeLater(interfacegraphique);
         historique = new HistoriquePile();
     }
@@ -91,16 +90,8 @@ public class GameManager {
     }
 
     static public void ResetLevel(){
-        InputStream in_stream = ClassLoader.getSystemClassLoader().getResourceAsStream("level.save");
-        try {
-            int [][] map = new LecteurNiveaux().lisProchainNiveau(in_stream);
-            LecteurNiveaux.printNiveau(niveaux[lvlno]);
-            niveaux[lvlno].mapSet(map);
-            LecteurNiveaux.printNiveau(niveaux[lvlno]);
-        }
-        catch (Exception e){
-            Configuration.logger().severe("Erreur de lecture du fichier de sauvegarde");
-        }
+        niveau().mapSet(sauvegarde);
+        sauvegarde = niveau().mapGetCopy();
         historique = new HistoriquePile();
         playercontroller.ResetController();
         RefreshScreen();

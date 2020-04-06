@@ -67,22 +67,11 @@ public class PlayerControler {
                 return;
             }
 
-            coup = Deplacement.Djikstra(new Point(x,y),arrivee);
+            coup = Deplacement.Djikstra(new Point(x,y),arrivee,GameManager.niveau().mapGet());
             if (coup == null) return;
+            LauchAutoMove(coup);
+        }
 
-            if(!executorService.isShutdown())executorService.shutdownNow();
-            executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(this::AutoMove, 0, 100, TimeUnit.MILLISECONDS);
-        }
-        private void AutoMove() {
-            ismoving = true;
-            historique.Faire(coup);
-            coup = coup.next;
-            if(coup == null){
-                ismoving = false;
-                executorService.shutdownNow();
-            }
-        }
         @Override
         public void mousePressed(MouseEvent mouseEvent) { }
         @Override
@@ -92,6 +81,26 @@ public class PlayerControler {
         @Override
         public void mouseExited(MouseEvent mouseEvent) { }
     };
+
+
+    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private Coup coupauto;
+    void LauchAutoMove(Coup c){
+        coupauto = c;
+        if(!executorService.isShutdown())executorService.shutdownNow();
+        executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(this::AutoMove, 0, 100, TimeUnit.MILLISECONDS);
+    }
+    private void AutoMove() {
+        ismoving = true;
+        historique.Faire(coupauto);
+        coupauto = coupauto.next;
+        if(coupauto == null){
+            ismoving = false;
+            executorService.shutdownNow();
+        }
+    }
+
 
     Coup CreateCoup(Coup.Dir dir){
         if(!CanMove(dir))
@@ -125,12 +134,12 @@ public class PlayerControler {
 
     boolean CanMove(Coup.Dir dir){
         Point m = Coup.DirToPoint(dir);
-        return (map[y+m.y][x+m.x] != MUR) && (map[y + m.y][x + m.x] != CAISSE || CanPush(dir));
+        return (map[y+m.y][x+m.x] != MUR) && ((map[y + m.y][x + m.x] != CAISSE && map[y + m.y][x + m.x] != CAISSEONBUT) || CanPush(dir));
     }
 
     boolean CanPush(Coup.Dir dir){
         Point m = Coup.DirToPoint(dir);
-        return (map[y + m.y][x + m.x] == CAISSE || map[y + m.y][x + m.x] == CAISSEONBUT) && !(map[y+m.y][x+m.x] == CAISSE && (map[y + m.y * 2][x + m.x * 2] == MUR || map[y + m.y * 2][x + m.x * 2] == CAISSE));
+        return (map[y + m.y][x + m.x] == CAISSE || map[y + m.y][x + m.x] == CAISSEONBUT) && !(map[y + m.y * 2][x + m.x * 2] == MUR || map[y + m.y * 2][x + m.x * 2] == CAISSE || map[y + m.y * 2][x + m.x * 2] == CAISSEONBUT);
     }
 
     void CleanPlayerCase(){
