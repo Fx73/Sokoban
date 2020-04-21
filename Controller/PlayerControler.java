@@ -67,7 +67,7 @@ public class PlayerControler {
                 return;
             }
 
-            coup = Deplacement.Djikstra(new Point(x,y),arrivee,GameManager.niveau().mapGet());
+            coup = Deplacement.Dijkstra(new Point(x,y),arrivee,GameManager.niveau().mapGet());
             if (coup == null) return;
             LauchAutoMove(coup);
         }

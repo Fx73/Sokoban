@@ -33,16 +33,16 @@ public class ImageBankSol extends ImageBank {
 
     @Override
     public Image GetImage(int a) {
-        if(GameManager.niveau().mapGet()[coord.x][coord.y] == BUT) {
-            if (a == 1)
+        if(a == BUT) {
+            if (GameManager.interfacegraphique.marqueur[coord.x][coord.y] == 1)
                 return but1;
-            if (a == 2)
+            if (GameManager.interfacegraphique.marqueur[coord.x][coord.y] == 2)
                 return but2;
             return but;
         }
-        if (a == 1)
+        if (GameManager.interfacegraphique.marqueur[coord.x][coord.y] == 1)
             return sol1;
-        if (a == 2)
+        if (GameManager.interfacegraphique.marqueur[coord.x][coord.y]== 2)
             return sol2;
         return sol;
     }

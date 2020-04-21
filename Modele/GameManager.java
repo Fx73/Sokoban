@@ -45,6 +45,10 @@ public class GameManager {
 
             if (keyEvent.getKeyCode() == KeyEvent.VK_S)
                 ia.SolveLevel();
+
+            if (keyEvent.getKeyCode() == KeyEvent.VK_N)
+                NextLevel();
+
             if (keyEvent.getKeyCode() == KeyEvent.VK_Q || keyEvent.getKeyCode() == KeyEvent.VK_A) {
                 Exit();
             }
@@ -66,6 +70,10 @@ public class GameManager {
                 if(niveaux[lvlno].mapGet()[i][j] == CAISSE || niveaux[lvlno].mapGet()[i][j] == BUT)
                     return;
 
+        NextLevel();
+    }
+
+    static private void NextLevel(){
         lvlno ++;
         if (lvlno >= niveaux.length)
             Exit();

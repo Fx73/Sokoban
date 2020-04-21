@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FOLDERS=(Global Structures TP1 TP6)
+FOLDERS=(Global Structures Modele Vue Controller)
 echo "Compilation des modules"
 for folder in ${FOLDERS[*]}
 do

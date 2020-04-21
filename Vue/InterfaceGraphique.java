@@ -12,6 +12,7 @@ import static java.lang.Integer.min;
 // L'interface runnable déclare une méthode run
 public class InterfaceGraphique implements Runnable {
 	JFrame frame;
+	public int marqueur[][];
 
 	public void run() {
 		// Creation d'une fenetre
@@ -39,7 +40,8 @@ public class InterfaceGraphique implements Runnable {
         }
         frame.setVisible(true);
 
-    }
+		marqueur  = new int[GameManager.niveau().lignes][GameManager.niveau().colonnes];
+	}
 
 	public void Refresh(){
 		frame.repaint();
@@ -71,12 +73,10 @@ public class InterfaceGraphique implements Runnable {
 
 
 	public void Marquer(int x, int y, int valeur){
-		if(niveaugraphique != null)	niveaugraphique.Marquer(x,y,valeur);
-		if(niveaugraphiqueanime != null) niveaugraphiqueanime.Marquer(x,y,valeur);
+		marqueur[y][x] = valeur;
 	}
 	public void Demarquer(){
-		if(niveaugraphique != null)	niveaugraphique.Demarquer();
-		if(niveaugraphiqueanime != null) niveaugraphiqueanime.Demarquer();
+		marqueur = new int[GameManager.niveau().lignes][GameManager.niveau().colonnes];
 	}
 
 }
